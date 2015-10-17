@@ -1,5 +1,8 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -25,7 +28,37 @@ public class Algorithms {
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
 		// TODO: Implement this method and others
+	    
 		return 0;
+	}
+	
+	/**
+	 * 
+	 */
+	public static void BFS(){
+	    Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
+	    
+	}
+	
+	/**
+	 * 
+	 */
+	public static void DFS(){
+	    
+	}
+	
+	/**
+	 * 
+	 */
+	public static void commonUpstreamVertices(){
+	    
+	}
+	
+	/**
+	 * 
+	 */
+	public static void commonDownstreamVertices(){
+	    
 	}
 
 }
