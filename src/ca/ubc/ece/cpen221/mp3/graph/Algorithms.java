@@ -40,6 +40,7 @@ public class Algorithms {
 	 * 
 	 */
 	public static TreeMap<Vertex, Vertex> BFS(Graph graph, Vertex a) {
+
 	    Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
       
 	    return null;
