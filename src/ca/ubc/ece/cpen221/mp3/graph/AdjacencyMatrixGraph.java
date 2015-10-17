@@ -110,7 +110,5 @@ public class AdjacencyMatrixGraph implements Graph {
         
         return indices;
         
-    }
-    
-    
+    } 
 }

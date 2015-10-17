@@ -1,7 +1,11 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
+import java.util.TreeMap;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -35,30 +39,36 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static void BFS(){
+	public static TreeMap<Vertex, Vertex> BFS(Graph graph, Vertex a) {
 	    Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
+      
+	    return null;
 	    
 	}
 	
 	/**
 	 * 
 	 */
-	public static void DFS(){
-	    
+	public static TreeMap<Vertex, Vertex> DFS(Graph graph, Vertex a) {
+	    Deque<Integer> stack = new ArrayDeque<Integer>();
+	       
+	    return null;
 	}
 	
 	/**
 	 * 
 	 */
-	public static void commonUpstreamVertices(){
+	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
 	    
+	    return null;
 	}
 	
 	/**
 	 * 
 	 */
-	public static void commonDownstreamVertices(){
+	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b){
 	    
+	    return null;
 	}
 
 }
