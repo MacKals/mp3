@@ -35,7 +35,7 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static void BFS(){
+	public static void BFS(Graph graph){
 	    Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
 	    
 	}
