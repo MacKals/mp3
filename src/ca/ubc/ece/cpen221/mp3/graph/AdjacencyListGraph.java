@@ -23,6 +23,7 @@ public class AdjacencyListGraph implements Graph {
                adjacencyList.get(i).add(v2); //add the edge
                break;
            }
+           
        }
         
     }
