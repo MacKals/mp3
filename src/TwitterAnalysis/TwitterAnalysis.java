@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
+import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -12,19 +13,21 @@ public class TwitterAnalysis {
 
     public static void main(String[] args){
         
+        System.out.print("Started");
+
         File file = new File("datasets/twitter.txt");
         Graph ourGraph = fileToGraph(file);
         
-  
+        System.out.print("Hurra!");
     }
     
     private static Graph fileToGraph(File file){
-        Graph buildGraph = new AdjacencyListGraph();
+        Graph buildGraph = new AdjacencyMatrixGraph();
         
         try{
             Scanner sc = new Scanner(file);
-            
             while (sc.hasNextLine()){
+                
                 String url = sc.nextLine().trim();
                 int i = url.indexOf("->");
                 
@@ -42,16 +45,15 @@ public class TwitterAnalysis {
                     buildGraph.addVertex(vertex2);
                 }
                 
-                
-                
-                
+                buildGraph.addEdge(vertex1, vertex2);
+               
             }
             
         } catch (FileNotFoundException e){
             e.printStackTrace();
         }
         
-        return null;
+        return buildGraph;
        
     }
     

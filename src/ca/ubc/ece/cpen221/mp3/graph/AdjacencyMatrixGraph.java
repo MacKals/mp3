@@ -11,14 +11,8 @@ public class AdjacencyMatrixGraph implements Graph {
 
     
     //matrix of mappings from element in outer array to element in inner array (from first dimension to second)
-    List<ArrayList<Boolean>> matrix; 
-    List<Vertex> vertices;
-    
-    
-    AdjacencyMatrixGraph(int size) {
-        matrix = new ArrayList<ArrayList<Boolean>>();
-        vertices = new ArrayList<Vertex>();
-    }
+    List<ArrayList<Boolean>> matrix = new ArrayList<ArrayList<Boolean>>();
+    List<Vertex> vertices = new ArrayList<Vertex>();
     
     @Override
     public void addVertex(Vertex v) {
@@ -107,6 +101,9 @@ public class AdjacencyMatrixGraph implements Graph {
             }
             
         }
+        
+        String string = new String();
+        
         
         return indices;
         
