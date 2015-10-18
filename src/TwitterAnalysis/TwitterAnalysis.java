@@ -34,14 +34,15 @@ public class TwitterAnalysis {
                 Vertex vertex1 = new Vertex(string1);
                 Vertex vertex2 = new Vertex(string2);
                 
-                
                 //adds the vertices to the graph if they don't exist already
-                if (!existsInGraph(buildGraph, vertex1, vertex2).get(0)){
+                if (!existsInGraph(buildGraph, vertex1)){
                     buildGraph.addVertex(vertex1);
                 }
-                if (!existsInGraph(buildGraph, vertex1, vertex2).get(1)){
+                if (!existsInGraph(buildGraph, vertex2)){
                     buildGraph.addVertex(vertex2);
                 }
+                
+                
                 
                 
             }
