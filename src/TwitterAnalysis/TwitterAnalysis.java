@@ -54,19 +54,15 @@ public class TwitterAnalysis {
        
     }
     
-    private static boolean[] existsInGraph(Graph graph, Vertex v1, Vertex v2) {
-        boolean[] exists = {false, false};
+    private static boolean existsInGraph(Graph graph, Vertex v) {
         
         for ( Vertex element : graph.getVertices() ) {
             
-            if (element.equals(v1)) {
-                exists[0] = true;
-            }
-            if (element.equals(v2)) {
-                exists[1] = true;
+            if (element.equals(v)) {
+                return true;
             }
         }
         
-        return exists;
+        return false;
     }
 }
