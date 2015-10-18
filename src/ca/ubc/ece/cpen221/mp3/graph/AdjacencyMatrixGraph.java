@@ -14,7 +14,6 @@ public class AdjacencyMatrixGraph implements Graph {
     List<ArrayList<Boolean>> matrix = new ArrayList<ArrayList<Boolean>>();
     List<Vertex> vertices = new ArrayList<Vertex>();
     
-    @Override
     public void addVertex(Vertex v) {
         
         //add one element to each 2. dimension ArrayList to get a (n,n+1) matrix 
@@ -29,7 +28,6 @@ public class AdjacencyMatrixGraph implements Graph {
         matrix.add( new ArrayList<Boolean>( Collections.nCopies(vertices.size(), false) ) );
     }
 
-    @Override
     public void addEdge(Vertex v1, Vertex v2) {
         
         Vertex[] vertexArray= {v1, v2};
@@ -38,7 +36,6 @@ public class AdjacencyMatrixGraph implements Graph {
         matrix.get(indecies[0]).set(indecies[1], true);
     }
 
-    @Override
     public boolean edgeExists(Vertex v1, Vertex v2) {
 
         Vertex[] vertexArray= {v1, v2};
@@ -47,7 +44,6 @@ public class AdjacencyMatrixGraph implements Graph {
         return matrix.get(indecies[0]).get(indecies[1]);  
     }
 
-    @Override
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
         List<Vertex> down = new LinkedList<Vertex>();
@@ -65,7 +61,6 @@ public class AdjacencyMatrixGraph implements Graph {
         return down;
     }
 
-    @Override
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         List<Vertex> up = new LinkedList<Vertex>();
         
@@ -82,9 +77,8 @@ public class AdjacencyMatrixGraph implements Graph {
         return up;
     }
 
-    @Override
     public List<Vertex> getVertices() {    
-    
+        
         return Collections.unmodifiableList(vertices);  
         
     }
@@ -100,10 +94,7 @@ public class AdjacencyMatrixGraph implements Graph {
                 }
             }
             
-        }
-        
-        String string = new String();
-        
+        }        
         
         return indices;
         

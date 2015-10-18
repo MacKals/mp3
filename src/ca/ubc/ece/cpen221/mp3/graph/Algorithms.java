@@ -39,11 +39,23 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static TreeMap<Vertex, Vertex> BFS(Graph graph, Vertex a) {
-
-	    Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
-      
-	    return null;
+	public static int BFS(Graph graph, Vertex startingVertex) {
+	    
+	    
+	   Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
+	    
+	   int distance = 0;
+	   
+	   
+	   
+      /* useful methods of graph 
+       graph.edgeExists(v1, v2);
+       graph.getDownstreamNeighbors(v);
+       graph.getUpstreamNeighbors(v);
+       graph.edgeExists(v1, v2);
+	    */
+	    
+	    return -1;
 	    
 	}
 	
@@ -60,6 +72,8 @@ public class Algorithms {
 	 * 
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
+	    
+	    
 	    
 	    return null;
 	}

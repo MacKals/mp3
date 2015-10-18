@@ -2,6 +2,7 @@ package TwitterAnalysis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
@@ -11,23 +12,67 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class TwitterAnalysis {
 
+    private static Scanner sc;
+    
+    private static String commonInfluencers = "commonInfluencers";
+    private static String numRetweets = "numRetweets";
+
+    private static String openingTolken = "<result>";
+    private static String closingTolken = "</result>";
+    
+
     public static void main(String[] args){
         
         System.out.print("Started");
 
         File file = new File("datasets/twitter.txt");
-        Graph ourGraph = fileToGraph(file);
+        Graph graph = fileToGraph(file);
         
-        System.out.print("Hurra!");
+        
+        Vertex a = new Vertex("14838508"); //fill in string
+        Vertex b = new Vertex("98032178"); //fill in string
+        
+        
+        List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
+        printCommonInfluencers(commonInfluencers, a, b);
+        
+        int retweets = minRetweetsForAToAppearInB(graph, a, b);
+        printnumRetweets(retweets, a, b);
+        
+    }
+    
+
+    private static void printCommonInfluencers(List<Vertex> result, Vertex v1, Vertex v2) {
+        String query = "commonInfluencers";
+        
+        System.out.println("query: " + query + " " + v1.toString() + " " + v2.toString()); 
+        System.out.println(openingTolken);
+               
+        for (Vertex element : result) {
+            System.out.println(element.toString());
+        }
+
+        System.out.println(closingTolken);
+        
+    }
+    
+    private static void printnumRetweets(int result, Vertex v1, Vertex v2) {
+        String query = "numRetweets";
+        
+        System.out.println("query: " + query + " " + v1.toString() + " " + v2.toString()); 
+        System.out.println(openingTolken);
+        System.out.println(result);
+        System.out.println(closingTolken);
+        
     }
     
     private static Graph fileToGraph(File file){
         Graph buildGraph = new AdjacencyMatrixGraph();
         
         try{
-            Scanner sc = new Scanner(file);
+            sc = new Scanner(file);
             while (sc.hasNextLine()){
-                
+              
                 String url = sc.nextLine().trim();
                 int i = url.indexOf("->");
                 
@@ -67,5 +112,16 @@ public class TwitterAnalysis {
         }
         
         return false;
+    }
+    
+    private static List<Vertex> commonInfluencers(Graph graph, Vertex a, Vertex b) {
+        
+        
+        return null;
+    }
+    
+    private static int minRetweetsForAToAppearInB(Graph graph, Vertex a, Vertex b) {
+        
+        return -1;
     }
 }
