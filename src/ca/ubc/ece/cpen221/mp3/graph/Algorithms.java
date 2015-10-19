@@ -1,6 +1,7 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,8 +53,7 @@ public class Algorithms {
        graph.edgeExists(v1, v2);
        graph.getDownstreamNeighbors(v);
        graph.getUpstreamNeighbors(v);
-       graph.edgeExists(v1, v2);
-	    */
+	   */
 	    
 	    return -1;
 	    
@@ -69,9 +69,11 @@ public class Algorithms {
 	}
 	
 	/**
-	 * 
+	 * Get all upstrem vertecies with a direct edge to both vertex a and vertex b
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
+	    
+	    ArrayList<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
 	    
 	    
 	    
