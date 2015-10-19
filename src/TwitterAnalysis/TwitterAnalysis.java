@@ -14,9 +14,6 @@ public class TwitterAnalysis {
 
     private static Scanner sc;
     
-//    private static String commonInfluencers = "commonInfluencers";
-//    private static String numRetweets = "numRetweets";
-
     private static String openingTolken = "<result>";
     private static String closingTolken = "</result>";
     
@@ -43,9 +40,8 @@ public class TwitterAnalysis {
     
 
     private static void printCommonInfluencers(List<Vertex> result, Vertex v1, Vertex v2) {
-        String query = "commonInfluencers";
         
-        System.out.println("query: " + query + " " + v1.toString() + " " + v2.toString()); 
+        System.out.println("query: commonInfluencers " + v1.toString() + " " + v2.toString()); 
         System.out.println(openingTolken);
                
         for (Vertex element : result) {
@@ -57,9 +53,8 @@ public class TwitterAnalysis {
     }
     
     private static void printnumRetweets(int result, Vertex v1, Vertex v2) {
-        String query = "numRetweets";
         
-        System.out.println("query: " + query + " " + v1.toString() + " " + v2.toString()); 
+        System.out.println("query: numRetweets " + v1.toString() + " " + v2.toString()); 
         System.out.println(openingTolken);
         System.out.println(result);
         System.out.println(closingTolken);
