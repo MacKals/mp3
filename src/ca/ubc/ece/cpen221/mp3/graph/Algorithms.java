@@ -118,11 +118,12 @@ public class Algorithms {
 	    for (Vertex elementInA : downstreamFromA){
 	        if (graph.edgeExists(vertB, elementInA)){
 	                commonDownstreamList.add(elementInA);
-	        }
-	        
+	        }    
 	    }
 	
 	    return Collections.unmodifiableList(commonDownstreamList);
 	}
-
+	
+	
+	
 }

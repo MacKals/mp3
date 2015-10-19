@@ -54,7 +54,7 @@ public class AdjacencyMatrixGraph implements Graph {
         
         for (int i = 0; i < vertices.size(); i++) {
             if (matrix.get(vertexIndex).get(i)) {
-                down.add(vertices.get(i));
+                down.add(new Vertex( vertices.get(i).toString() ));     //defensive copying
             }
         }
         
@@ -70,7 +70,7 @@ public class AdjacencyMatrixGraph implements Graph {
         
         for (int i = 0; i < vertices.size(); i++) {
             if (matrix.get(i).get(vertexIndex)) {
-                up.add(vertices.get(i));
+                up.add(new Vertex( vertices.get(i).toString() ));   //defensive copying
             }
         }
         
