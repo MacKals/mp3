@@ -17,17 +17,19 @@ public class TwitterAnalysis {
     private static String openingTolken = "<result>";
     private static String closingTolken = "</result>";
     
-
+    private static String twitterFile = "datasets/twitter.txt";
+    private static String simpleFile = "datasets/SimpleDataset.txt";
+    
     public static void main(String[] args){
         
         System.out.print("Started");
 
-        File file = new File("datasets/twitter.txt");
+        File file = new File(simpleFile);
         Graph graph = fileToGraph(file);
         
         
-        Vertex a = new Vertex("14838508"); //fill in string
-        Vertex b = new Vertex("98032178"); //fill in string
+        Vertex a = new Vertex("1"); //fill in string
+        Vertex b = new Vertex("3"); //fill in string
         
         
         List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
