@@ -33,9 +33,20 @@ public class Algorithms {
 	 * @return
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-		// TODO: Implement this method and others
-	    
-		return 0;
+		//THIS DOESN'T WORK
+		int distance = 0;
+		
+		List<Vertex> listOnLevel = new ArrayList<Vertex>();
+		
+		listOnLevel.addAll(graph.getUpstreamNeighbors(a));
+		listOnLevel.addAll(graph.getDownstreamNeighbors(a));
+		
+	    for (Vertex vertexToCheck : listOnLevel){
+	        if ( )
+	        distance += shortestDistance(graph, vertexToCheck, b);
+	        
+	    }
+	    return distance;
 	}
 	
 	/**
@@ -112,8 +123,6 @@ public class Algorithms {
 	    List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
 	    
 	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
-	    
-	    //see which vertices are shared within both lists
 	    
 	    for (Vertex elementInA : downstreamFromA){
 	        if (graph.edgeExists(vertB, elementInA)){
