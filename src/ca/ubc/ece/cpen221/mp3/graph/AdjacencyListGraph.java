@@ -30,7 +30,6 @@ public class AdjacencyListGraph implements Graph {
         
     }
 
-    
     public boolean edgeExists(Vertex v1, Vertex v2) {
         
         for (int i = 0; i < adjacencyList.size(); i++){
