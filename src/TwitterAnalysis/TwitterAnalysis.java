@@ -14,8 +14,8 @@ public class TwitterAnalysis {
 
     private static Scanner sc;
     
-    private static String commonInfluencers = "commonInfluencers";
-    private static String numRetweets = "numRetweets";
+//    private static String commonInfluencers = "commonInfluencers";
+//    private static String numRetweets = "numRetweets";
 
     private static String openingTolken = "<result>";
     private static String closingTolken = "</result>";
