@@ -81,7 +81,12 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b){
+	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex vertA, Vertex vertB){
+	    
+	    ArrayList<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
+	    ArrayList<Vertex> downstreamFromB = graph.getDownstreamNeighbors(vertB);
+	    
+	    
 	    
 	    return null;
 	}
