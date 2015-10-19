@@ -70,7 +70,11 @@ public class Algorithms {
 	}
 	
 	/**
-	 * Get all upstrem vertecies with a direct edge to both vertex a and vertex b
+	 * Get all upstream vertices with a direct edge to both vertex a and vertex b
+	 * @param graph Graph to be analysed 
+	 * @param a Vertex
+	 * @param b Vertex 
+	 * @param list of common downstream neighbours of a and b
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
 	    
@@ -89,9 +93,13 @@ public class Algorithms {
 	    return commonUpstreamVertecies;
 	}
 	
-	/**
-	 * 
-	 */
+    /**
+     * Get all downstream vertices with a direct edge to both vertex a and vertex b
+     * @param graph Graph to be analysed 
+     * @param a Vertex
+     * @param b Vertex 
+     * @param list of common upstream neighbours of a and b
+     */
 	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex vertA, Vertex vertB){
 	    
 	    List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
