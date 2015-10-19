@@ -76,13 +76,19 @@ public class Algorithms {
 	    
 	    List<Vertex> commonUpstreamVertices = new ArrayList<Vertex>();
 	    
+	    //get neighbour of a
 	    List<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
 
+	    // compare all neighbours of a to neighbours of b using teh .edgeEgist method of the graph
 	    for (Vertex aNeighbour : aNeighbours) {
+
 	        if (graph.edgeExists(b, aNeighbour)) {
 	        
 	            commonUpstreamVertices.add(b);
-	        
+
+	        if (graph.edgeExists(b, aNeighbour)) {      
+	            commonUpstreamVertices.add(b);
+
 	        }
 	    }
 	    
