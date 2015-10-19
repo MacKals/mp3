@@ -2,6 +2,7 @@ package ca.ubc.ece.cpen221.mp3.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,12 +86,23 @@ public class Algorithms {
 	 */
 	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex vertA, Vertex vertB){
 	    
-	    ArrayList<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
-	    ArrayList<Vertex> downstreamFromB = graph.getDownstreamNeighbors(vertB);
+	    List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
 	    
+	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
+	    List<Vertex> downstreamFromB = graph.getDownstreamNeighbors(vertB);
 	    
+	    //see which vertices are shared within both lists
 	    
-	    return null;
+	    for (Vertex elementInA : downstreamFromA){
+	        for (Vertex elementInB : downstreamFromB){
+	            if(elementInA.equals(elementInB)){
+	                commonDownstreamList.add(elementInA);
+	            }
+	        }
+	        
+	    }
+	
+	    return Collections.unmodifiableList(commonDownstreamList);
 	}
 
 }
