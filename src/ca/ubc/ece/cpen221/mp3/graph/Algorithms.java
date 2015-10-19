@@ -73,11 +73,19 @@ public class Algorithms {
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
 	    
-	    ArrayList<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
+	    List<Vertex> commonUpstreamVertecies = new ArrayList<Vertex>();
 	    
+	    List<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
+
+	    for (Vertex aNeighbour : aNeighbours) {
+	        if (graph.edgeExists(b, aNeighbour)) {
+	        
+	            commonUpstreamVertecies.add(b);
+	        
+	        }
+	    }
 	    
-	    
-	    return null;
+	    return commonUpstreamVertecies;
 	}
 	
 	/**
