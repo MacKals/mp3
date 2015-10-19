@@ -74,19 +74,19 @@ public class Algorithms {
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
 	    
-	    List<Vertex> commonUpstreamVertecies = new ArrayList<Vertex>();
+	    List<Vertex> commonUpstreamVertices = new ArrayList<Vertex>();
 	    
 	    List<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
 
 	    for (Vertex aNeighbour : aNeighbours) {
 	        if (graph.edgeExists(b, aNeighbour)) {
 	        
-	            commonUpstreamVertecies.add(b);
+	            commonUpstreamVertices.add(b);
 	        
 	        }
 	    }
 	    
-	    return commonUpstreamVertecies;
+	    return Collections.unmodifiableList(commonUpstreamVertices);
 	}
 	
 	/**
@@ -97,15 +97,12 @@ public class Algorithms {
 	    List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
 	    
 	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
-	    List<Vertex> downstreamFromB = graph.getDownstreamNeighbors(vertB);
 	    
 	    //see which vertices are shared within both lists
 	    
 	    for (Vertex elementInA : downstreamFromA){
-	        for (Vertex elementInB : downstreamFromB){
-	            if(elementInA.equals(elementInB)){
+	        if (graph.edgeExists(vertB, elementInA)){
 	                commonDownstreamList.add(elementInA);
-	            }
 	        }
 	        
 	    }
