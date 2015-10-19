@@ -59,7 +59,8 @@ public class AdjacencyListGraph implements Graph {
                 
                 
                 for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-                    downstreamNeighboursList.add(adjacencyList.get(i).get(i2));
+                    //defensive copy
+                    downstreamNeighboursList.add(new Vertex(adjacencyList.get(i).get(i2).toString()));
                 }
                 
                 break;
@@ -78,14 +79,15 @@ public class AdjacencyListGraph implements Graph {
             for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
                 
                 if (adjacencyList.get(i).get(i2).equals(v)){
-                    upstreamNeighboursList.add(adjacencyList.get(i).get(0));
+                  //defensive copy
+                    upstreamNeighboursList.add(new Vertex(adjacencyList.get(i).get(0).toString()));
                 }
                 
             }
                 
         }
         
-        return Collections.unmodifiableList(upstreamNeighboursList);
+        return upstreamNeighboursList;
     }
 
 
@@ -93,9 +95,9 @@ public class AdjacencyListGraph implements Graph {
         LinkedList<Vertex> verticesList = new LinkedList<Vertex>();
         
         for (int i = 0; i < adjacencyList.size(); i++){
-            verticesList.add(adjacencyList.get(i).get(0));
+          //defensive copy
+            verticesList.add(new Vertex(adjacencyList.get(i).get(0).toString())); 
         }
-        return Collections.unmodifiableList(verticesList);
+        return verticesList;
     }
-
 }

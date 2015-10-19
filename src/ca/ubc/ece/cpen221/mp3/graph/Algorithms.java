@@ -89,6 +89,7 @@ public class Algorithms {
 	        if (graph.edgeExists(b, aNeighbour)) {
 	        
 	            commonUpstreamVertices.add(b);
+	        }
 
 	        if (graph.edgeExists(b, aNeighbour)) {      
 	            commonUpstreamVertices.add(b);
