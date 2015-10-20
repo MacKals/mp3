@@ -30,22 +30,6 @@ public class Algorithms {
 	 * @param b
 	 * @return
 	 */
-	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-		//THIS DOESN'T WORK
-		int distance = 0;
-		
-		List<Vertex> listOnLevel = new ArrayList<Vertex>();
-		
-		listOnLevel.addAll(graph.getUpstreamNeighbors(a));
-		listOnLevel.addAll(graph.getDownstreamNeighbors(a));
-		
-	    for (Vertex vertexToCheck : listOnLevel){
-	//        if ( )
-	        distance += shortestDistance(graph, vertexToCheck, b);
-	        
-	    }
-	    return distance;
-	}
 	
 	/**
 	 * 
@@ -127,11 +111,11 @@ public class Algorithms {
 	}
 	
 	 
-	interface BredthFirstSearch {
+	interface BreadthFirstSearch {
 	    int evaluate(Vertex v, boolean upstream);   
 	}
 	
-    public static int shortestDistanceVersion(Graph graph, Vertex a, Vertex b) {
+    public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
                 
         /*
          * get vertices connected to a
@@ -143,7 +127,7 @@ public class Algorithms {
          * 
          */
         
-        BredthFirstSearch Bfs = new BredthFirstSearch() {
+        BreadthFirstSearch Bfs = new BreadthFirstSearch() {
 
             public int evaluate(Vertex v, boolean upstream) {
                 
@@ -152,7 +136,7 @@ public class Algorithms {
                     return 0;
                 }
                 
-                // using breath first search to determine shortest distance, enabling us to terminate at once connection is found.
+                // using breadth first search to determine shortest distance, enabling us to terminate at once connection is found.
                 List<Vertex> checkedVertices = new LinkedList<Vertex>();
                 Queue<Vertex> stagedVertices = new LinkedList<Vertex>();
                 
@@ -164,16 +148,16 @@ public class Algorithms {
                           
                     Vertex vertexUnderEvaluation = stagedVertices.poll();
                     
-                    List<Vertex> directionalVerteciesOfVertex;
+                    List<Vertex> directionalVerticesOfVertex;
                     
                     //determine which direction to probe
                     if (upstream) {
-                        directionalVerteciesOfVertex = graph.getUpstreamNeighbors(vertexUnderEvaluation);
+                        directionalVerticesOfVertex = graph.getUpstreamNeighbors(vertexUnderEvaluation);
                     } else {
-                        directionalVerteciesOfVertex = graph.getDownstreamNeighbors(vertexUnderEvaluation);
+                        directionalVerticesOfVertex = graph.getDownstreamNeighbors(vertexUnderEvaluation);
                     }
                     
-                    for (Vertex vertex : directionalVerteciesOfVertex) {
+                    for (Vertex vertex : directionalVerticesOfVertex) {
                         
                         if (vertex.equals(b)) {
                             return traversedDistance;
@@ -192,10 +176,10 @@ public class Algorithms {
         };
         
         int distanceUpstream = Bfs.evaluate(a, true);
-        int distsanceDownstram = Bfs.evaluate(a, false);
+        int distanceDownstram = Bfs.evaluate(a, false);
         
-        if (distanceUpstream == distsanceDownstram && distanceUpstream == -1) return distanceUpstream;
-        else if (distanceUpstream == -1) return distsanceDownstram;
+        if (distanceUpstream == distanceDownstram && distanceUpstream == -1) return distanceUpstream;
+        else if (distanceUpstream == -1) return distanceDownstram;
         else return distanceUpstream; 
     }
 }
