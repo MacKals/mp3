@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.TreeMap;
+import java.util.Set;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -40,7 +40,7 @@ public class Algorithms {
 		listOnLevel.addAll(graph.getDownstreamNeighbors(a));
 		
 	    for (Vertex vertexToCheck : listOnLevel){
-	        if ( )
+	//        if ( )
 	        distance += shortestDistance(graph, vertexToCheck, b);
 	        
 	    }
@@ -50,14 +50,9 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static int BFS(Graph graph, Vertex startingVertex) {
-	    
-	    
+	public static Set<List<Vertex>> BFS(Graph graph, Vertex startingVertex) {
+	   
 	//   Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
-	    
-	 //  int distance = 0;
-	   
-	   
 	   
       /* useful methods of graph 
        graph.edgeExists(v1, v2);
@@ -65,14 +60,14 @@ public class Algorithms {
        graph.getUpstreamNeighbors(v);
 	   */
 	    
-	    return -1;
+	    return null;
 	    
 	}
 	
 	/**
 	 * 
 	 */
-	public static TreeMap<Vertex, Vertex> DFS(Graph graph, Vertex a) {
+	public static Set<List<Vertex>> DFS(Graph graph, Vertex a) {
 	//    Deque<Integer> stack = new ArrayDeque<Integer>();
 	       
 	    return null;
@@ -131,23 +126,13 @@ public class Algorithms {
 	    return Collections.unmodifiableList(commonDownstreamList);
 	}
 	
-	
-	
+	 
 	interface BredthFirstSearch {
-	    int evaluate(Vertex v);
+	    int evaluate(Vertex v, boolean upstream);   
 	}
 	
     public static int shortestDistanceVersion(Graph graph, Vertex a, Vertex b) {
-        
-        // using breath first search to determine shortest distance, enabling us to terminate at one when conenction is found.
-        
-        List<Vertex> checkedUpstreamVertices = new LinkedList<Vertex>();
-        Queue<Vertex> stagedUpstreamVertices = new LinkedList<Vertex>();
-        
-        List<Vertex> checkedDownstreamVertices = new LinkedList<Vertex>();
-        Queue<Vertex> stagedDownstreamVertices = new LinkedList<Vertex>();
-
-        
+                
         /*
          * get vertices connected to a
          * stage vertices connected
@@ -158,74 +143,59 @@ public class Algorithms {
          * 
          */
         
-        stagedUpstreamVertices.add(a);
-      
-        //Check upstream
-        int upstreamDistance = 1;
-
-        while (stagedUpstreamVertices.size() != 0) {
-                  
-            Vertex v = stagedUpstreamVertices.poll();
-            
-            if (v.equals(b)) {
-                break;
-            } else {
-                
-                List<Vertex> upVertices = graph.getUpstreamNeighbors(v);
-                
-                for (Vertex vertex : upVertices) {
-                    if (!checkedUpstreamVertices.contains(vertex)) {
-                        stagedUpstreamVertices.add(vertex);
-                    }
-                }
-            }
-            upstreamDistance++;
-        }
-        
-        //Check downstream
-        int downstreamDistance = 1;
-        
-        while (!stagedDownstreamVertices.isEmpty() && downstreamDistance < upstreamDistance) {
-            Vertex v = stagedDownstreamVertices.poll();
-            
-            if (v.equals(b)) {
-                break;
-            } else {
-                
-                List<Vertex> downVertices = graph.getDownstreamNeighbors(v);
-                
-                for (Vertex vertex : downVertices) {
-                    if (!checkedDownstreamVertices.contains(vertex)) {
-                        stagedDownstreamVertices.add(vertex);
-                    }
-                }
-            }
-            downstreamDistance++;
-        } 
-        
-        return upstreamDistance < downstreamDistance ? upstreamDistance : downstreamDistance;
-    }
-        
-        /*
         BredthFirstSearch Bfs = new BredthFirstSearch() {
-            public int evaluate(Vertex v) {
+
+            public int evaluate(Vertex v, boolean upstream) {
                 
-                if (v.equals(b)) {
+                //ensure a != b
+                if (a.equals(b)) {
                     return 0;
-                } else {
-                    for (Vertex element : graph.getDownstreamNeighbors(v)) {
-                        if (element.) {
-                            
-                        }
-                    }
                 }
                 
-                return 0;
+                // using breath first search to determine shortest distance, enabling us to terminate at once connection is found.
+                List<Vertex> checkedVertices = new LinkedList<Vertex>();
+                Queue<Vertex> stagedVertices = new LinkedList<Vertex>();
+                
+                stagedVertices.add(a);
+
+                int traversedDistance = 1;
+
+                while (stagedVertices.size() != 0) {
+                          
+                    Vertex vertexUnderEvaluation = stagedVertices.poll();
+                    
+                    List<Vertex> directionalVerteciesOfVertex;
+                    
+                    //determine which direction to probe
+                    if (upstream) {
+                        directionalVerteciesOfVertex = graph.getUpstreamNeighbors(vertexUnderEvaluation);
+                    } else {
+                        directionalVerteciesOfVertex = graph.getDownstreamNeighbors(vertexUnderEvaluation);
+                    }
+                    
+                    for (Vertex vertex : directionalVerteciesOfVertex) {
+                        
+                        if (vertex.equals(b)) {
+                            return traversedDistance;
+                        }
+                        
+                        if (!checkedVertices.contains(vertex)) {
+                            stagedVertices.add(vertex);
+                        }
+                    }   
+                   
+                    traversedDistance++;
+                }
+                
+                return -1;
             }
         };
         
-        Bfs.evaluate(a);
+        int distanceUpstream = Bfs.evaluate(a, true);
+        int distsanceDownstram = Bfs.evaluate(a, false);
         
-        return 0;
-    }*/
+        if (distanceUpstream == distsanceDownstram && distanceUpstream == -1) return distanceUpstream;
+        else if (distanceUpstream == -1) return distsanceDownstram;
+        else return distanceUpstream; 
+    }
 }

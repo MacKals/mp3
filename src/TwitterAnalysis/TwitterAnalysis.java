@@ -26,16 +26,15 @@ public class TwitterAnalysis {
         File file = new File(simpleFile);
         Graph graph = fileToGraph(file);
         
-        
-        Vertex a = new Vertex("6"); //fill in string
-        Vertex b = new Vertex("3"); //fill in string
+        Vertex a = new Vertex("1"); //fill in string
+        Vertex b = new Vertex("9"); //fill in string
         
         int retweets = minRetweetsForAToAppearInB(graph, a, b);
         printnumRetweets(retweets, a, b);
         
-        List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
+      /*  List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
         printCommonInfluencers(commonInfluencers, a, b);
-
+*/
     }
     
 
@@ -69,10 +68,10 @@ public class TwitterAnalysis {
             while (sc.hasNextLine()){
               
                 String url = sc.nextLine().trim();
-                int i = url.indexOf("->");
+                int i = url.indexOf(" -> ");
                 
-                String string1 = url.substring(0,i-1);
-                String string2 = url.substring(i+3);
+                String string1 = url.substring(0,i);
+                String string2 = url.substring(i+4);
                 
                 Vertex vertex1 = new Vertex(string1);
                 Vertex vertex2 = new Vertex(string2);
@@ -118,9 +117,9 @@ public class TwitterAnalysis {
     }
     
     
-    //shortest uppstream distane
+    //shortest upstream distance
     private static int minRetweetsForAToAppearInB(Graph graph, Vertex a, Vertex b) {
         
-        return Algorithms.shortestDistanceVersion(graph, a, b); //NOTE: return both sortest upstream and downstram distance
+        return Algorithms.shortestDistanceVersion(graph, a, b); //NOTE: return both shortest upstream and downstream distance
     }
 }
