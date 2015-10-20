@@ -1,9 +1,7 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -44,9 +42,9 @@ public class Algorithms {
 	public static int BFS(Graph graph, Vertex startingVertex) {
 	    
 	    
-	   Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
+	//   Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
 	    
-	   int distance = 0;
+	 //  int distance = 0;
 	   
 	   
 	   
@@ -64,7 +62,7 @@ public class Algorithms {
 	 * 
 	 */
 	public static TreeMap<Vertex, Vertex> DFS(Graph graph, Vertex a) {
-	    Deque<Integer> stack = new ArrayDeque<Integer>();
+	//    Deque<Integer> stack = new ArrayDeque<Integer>();
 	       
 	    return null;
 	}
@@ -126,4 +124,99 @@ public class Algorithms {
 	
 	
 	
+	interface BredthFirstSearch {
+	    int evaluate(Vertex v);
+	}
+	
+    public static int shortestDistanceVersion(Graph graph, Vertex a, Vertex b) {
+        
+        // using breath first search to determine shortest distance, enabling us to terminate at one when conenction is found.
+        
+        List<Vertex> checkedUpstreamVertices = new LinkedList<Vertex>();
+        Queue<Vertex> stagedUpstreamVertices = new LinkedList<Vertex>();
+        
+        List<Vertex> checkedDownstreamVertices = new LinkedList<Vertex>();
+        Queue<Vertex> stagedDownstreamVertices = new LinkedList<Vertex>();
+
+        
+        /*
+         * get vertices connected to a
+         * stage vertices connected
+         * evaluate first staged vertex if not checked before
+         *  -   evaluate:
+         *      -   check if equal 
+         *      -   stage connected vertices 
+         * 
+         */
+        
+        stagedUpstreamVertices.add(a);
+      
+        //Check upstream
+        int upstreamDistance = 1;
+
+        while (stagedUpstreamVertices.size() != 0) {
+                  
+            Vertex v = stagedUpstreamVertices.poll();
+            
+            if (v.equals(b)) {
+                break;
+            } else {
+                
+                List<Vertex> upVertices = graph.getUpstreamNeighbors(v);
+                
+                for (Vertex vertex : upVertices) {
+                    if (!checkedUpstreamVertices.contains(vertex)) {
+                        stagedUpstreamVertices.add(vertex);
+                    }
+                }
+            }
+            upstreamDistance++;
+        }
+        
+        //Check downstream
+        int downstreamDistance = 1;
+        
+        while (!stagedDownstreamVertices.isEmpty() && downstreamDistance < upstreamDistance) {
+            Vertex v = stagedDownstreamVertices.poll();
+            
+            if (v.equals(b)) {
+                break;
+            } else {
+                
+                List<Vertex> downVertices = graph.getDownstreamNeighbors(v);
+                
+                for (Vertex vertex : downVertices) {
+                    if (!checkedDownstreamVertices.contains(vertex)) {
+                        stagedDownstreamVertices.add(vertex);
+                    }
+                }
+            }
+            downstreamDistance++;
+        } 
+        
+        return upstreamDistance < downstreamDistance ? upstreamDistance : downstreamDistance;
+    }
+        
+        /*
+        BredthFirstSearch Bfs = new BredthFirstSearch() {
+            public int evaluate(Vertex v) {
+                
+                if (v.equals(b)) {
+                    return 0;
+                } else {
+                    for (Vertex element : graph.getDownstreamNeighbors(v)) {
+                        if (element.) {
+                            
+                        }
+                    }
+                }
+                
+                return 0;
+            }
+        };
+        
+        Bfs.evaluate(a);
+        
+        return 0;
+    }*/
 }

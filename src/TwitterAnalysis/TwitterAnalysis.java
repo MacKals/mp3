@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
+import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
@@ -22,22 +23,19 @@ public class TwitterAnalysis {
     
     public static void main(String[] args){
         
-        System.out.print("Started");
-
         File file = new File(simpleFile);
         Graph graph = fileToGraph(file);
         
         
-        Vertex a = new Vertex("1"); //fill in string
+        Vertex a = new Vertex("6"); //fill in string
         Vertex b = new Vertex("3"); //fill in string
-        
-        
-        List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
-        printCommonInfluencers(commonInfluencers, a, b);
         
         int retweets = minRetweetsForAToAppearInB(graph, a, b);
         printnumRetweets(retweets, a, b);
         
+        List<Vertex> commonInfluencers = commonInfluencers(graph, a, b);
+        printCommonInfluencers(commonInfluencers, a, b);
+
     }
     
 
@@ -74,7 +72,7 @@ public class TwitterAnalysis {
                 int i = url.indexOf("->");
                 
                 String string1 = url.substring(0,i-1);
-                String string2 = url.substring(i+2);
+                String string2 = url.substring(i+3);
                 
                 Vertex vertex1 = new Vertex(string1);
                 Vertex vertex2 = new Vertex(string2);
@@ -111,14 +109,18 @@ public class TwitterAnalysis {
         return false;
     }
     
+    //common downstream vertecies of both a and b 
     private static List<Vertex> commonInfluencers(Graph graph, Vertex a, Vertex b) {
+        
         
         
         return null;
     }
     
+    
+    //shortest uppstream distane
     private static int minRetweetsForAToAppearInB(Graph graph, Vertex a, Vertex b) {
         
-        return -1;
+        return Algorithms.shortestDistanceVersion(graph, a, b); //NOTE: return both sortest upstream and downstram distance
     }
 }
