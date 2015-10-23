@@ -108,7 +108,7 @@ public class TwitterAnalysis {
         return false;
     }
     
-    //common downstream vertecies of both a and b 
+    //common downstream vertices of both a and b 
     private static List<Vertex> commonInfluencers(Graph graph, Vertex a, Vertex b) {
         
         

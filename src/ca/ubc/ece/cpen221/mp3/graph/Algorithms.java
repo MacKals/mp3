@@ -136,7 +136,7 @@ public class Algorithms {
                     return 0;
                 }
                 
-                // using breadth first search to determine shortest distance, enabling us to terminate at once connection is found.
+                // using breadth first search to determine shortest distance, enabling us to terminate once connection is found.
                 List<Vertex> checkedVertices = new LinkedList<Vertex>();
                 Queue<Vertex> stagedVertices = new LinkedList<Vertex>();
                 
@@ -176,10 +176,10 @@ public class Algorithms {
         };
         
         int distanceUpstream = Bfs.evaluate(a, true);
-        int distanceDownstram = Bfs.evaluate(a, false);
+        int distanceDownstream = Bfs.evaluate(a, false);
         
-        if (distanceUpstream == distanceDownstram && distanceUpstream == -1) return distanceUpstream;
-        else if (distanceUpstream == -1) return distanceDownstram;
+        if (distanceUpstream == distanceDownstream && distanceUpstream == -1) return distanceUpstream;
+        else if (distanceUpstream == -1) return distanceDownstream;
         else return distanceUpstream; 
     }
 }
