@@ -52,7 +52,22 @@ public class Algorithms {
 	 * 
 	 */
 	public static Set<List<Vertex>> DFS(Graph graph, Vertex a) {
-	//    Deque<Integer> stack = new ArrayDeque<Integer>();
+	    
+	    /*
+	     * Operation:
+	     * get vertex a
+	     * add vertecies to stack (evaluates the most recent first)
+	     * evaluate uppermost entry in stack 
+	     * 
+	     * evaluate: 
+	     *  - check if evaluated before
+	     *  - get associated vertices and add to set
+	     *  - 
+	     */
+	    
+	    
+	    
+	    Deque<Integer> stack = new ArrayDeque<Integer>();
 	       
 	    return null;
 	}
@@ -178,7 +193,7 @@ public class Algorithms {
         int distanceUpstream = Bfs.evaluate(a, true);
         int distanceDownstream = Bfs.evaluate(a, false);
         
-        if (distanceUpstream == distanceDownstream && distanceUpstream == -1) return distanceUpstream;
+        if (distanceDownstream == -1 && distanceUpstream == -1) return -1;
         else if (distanceUpstream == -1) return distanceDownstream;
         else return distanceUpstream; 
     }
