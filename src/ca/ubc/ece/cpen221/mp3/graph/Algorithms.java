@@ -40,15 +40,6 @@ public class Algorithms {
 	public static Set<List<Vertex>> BFS(Graph graph) {
 	   
 	    return search(graph, true);
-	  
-	   
-      /* useful methods of graph 
-       graph.edgeExists(v1, v2);
-       graph.getDownstreamNeighbors(v);
-       graph.getUpstreamNeighbors(v);
-	   */
-	    
-	    
 	}
 	
 	/**
@@ -57,20 +48,6 @@ public class Algorithms {
 	public static Set<List<Vertex>> DFS(Graph graph) {
 	    	    
 	    return search(graph, false);
-	    
-       /*
-        * Operation:
-        * Start at a vertex a (loop through all)
-        * 
-        * get vertex a
-        * add vertecies to stack (evaluates the most recent first)
-        * evaluate uppermost entry in stack 
-        * 
-        * evaluate: 
-        *  - check if evaluated before
-        *  - get associated vertices and add to set
-        *  - 
-        */  
 	}
 	
 	private static Set<List<Vertex>> search(Graph graph, boolean BFS) {
