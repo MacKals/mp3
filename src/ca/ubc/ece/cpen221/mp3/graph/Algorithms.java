@@ -71,7 +71,7 @@ public class Algorithms {
 	    //get neighbour of a
 	    List<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
 
-	    // compare all neighbours of a to neighbours of b using teh .edgeEgist method of the graph
+	    // compare all neighbours of a to neighbours of b using the .edgeExists method of the graph
 	    for (Vertex aNeighbour : aNeighbours) {
 
 	        if (graph.edgeExists(b, aNeighbour)) {
@@ -150,7 +150,7 @@ public class Algorithms {
                     
                     List<Vertex> directionalVerticesOfVertex;
                     
-                    //determine which direction to probe
+                    //probe in specified direction, upstream or downstream
                     if (upstream) {
                         directionalVerticesOfVertex = graph.getUpstreamNeighbors(vertexUnderEvaluation);
                     } else {
@@ -166,6 +166,7 @@ public class Algorithms {
                         if (!checkedVertices.contains(vertex)) {
                             stagedVertices.add(vertex);
                         }
+                        
                     }   
                    
                     traversedDistance++;
