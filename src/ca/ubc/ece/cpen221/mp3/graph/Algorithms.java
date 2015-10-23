@@ -133,7 +133,9 @@ public class Algorithms {
 	}
 	
     public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
-                
+                        
+        int NotFound = -1;
+
         /*
          * get vertices connected to a
          * stage vertices connected
@@ -189,15 +191,16 @@ public class Algorithms {
                     traversedDistance++;
                 }
                 
-                return -1;
+                return NotFound;
             }
         };
-        
+                
         int distanceUpstream = Bfs.evaluate(a, true);
         int distanceDownstream = Bfs.evaluate(a, false);
         
-        if (distanceDownstream == -1 && distanceUpstream == -1) return -1;
-        else if (distanceUpstream == -1) return distanceDownstream;
-        else return distanceUpstream; 
+        if (distanceDownstream == NotFound && distanceUpstream == NotFound) return NotFound;
+        else if (distanceUpstream == NotFound) return distanceDownstream;
+        else if (distanceDownstream == NotFound) return distanceUpstream;
+        else return distanceUpstream < distanceDownstream ? distanceUpstream : distanceDownstream; 
     }
 }
