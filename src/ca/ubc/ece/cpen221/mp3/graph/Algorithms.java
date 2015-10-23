@@ -1,11 +1,14 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -51,25 +54,80 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static Set<List<Vertex>> DFS(Graph graph, Vertex a) {
+	public static Set<List<Vertex>> DFS(Graph graph) {
+	    	    
+	    return search(graph, false);
 	    
-	    /*
-	     * Operation:
-	     * get vertex a
-	     * add vertecies to stack (evaluates the most recent first)
-	     * evaluate uppermost entry in stack 
-	     * 
-	     * evaluate: 
-	     *  - check if evaluated before
-	     *  - get associated vertices and add to set
-	     *  - 
-	     */
+       /*
+        * Operation:
+        * Start at a vertex a (loop through all)
+        * 
+        * get vertex a
+        * add vertecies to stack (evaluates the most recent first)
+        * evaluate uppermost entry in stack 
+        * 
+        * evaluate: 
+        *  - check if evaluated before
+        *  - get associated vertices and add to set
+        *  - 
+        */  
+	}
+	
+	private static Set<List<Vertex>> search(Graph graph, boolean BFS) {
 	    
+	    Set<List<Vertex>> returnSet = new TreeSet<List<Vertex>>();
+        
+        for ( Vertex vertex : graph.getVertices() ) {
+                        
+            returnSet.add( listFromVertex(graph, vertex, BFS) );
+           
+        }
+        
+        return returnSet;
+    
+	}
+	
+	private static List<Vertex> listFromVertex(Graph graph, Vertex vertex, boolean BFS) {
 	    
+	    List<Vertex> returnList = new ArrayList<Vertex>();
 	    
-	    Deque<Integer> stack = new ArrayDeque<Integer>();
+	    Deque<Vertex> stagedVertices = new ArrayDeque<Vertex>();
+	    List<Vertex> checkedVertices = new ArrayList<Vertex>();
+	    
+	    stagedVertices.add(vertex);
+	    
+	    while ( !stagedVertices.isEmpty() ) {
+	        
+	        //get next vertex according to search method
+	        //check if encountered before
+	        //add to return
+	        //get connected vertices 
+	        
+	        Vertex vertexUnderEvaluation;
+	        
+	        if (BFS) {    
+	            vertexUnderEvaluation = stagedVertices.removeLast();   //queue behaviour
+	        } else {       
+	            vertexUnderEvaluation = stagedVertices.removeFirst();  //stack behaviour
+	        }
+	        
+	        if (checkedVertices.contains(vertexUnderEvaluation)) {
+	            continue;
+	        }
 	       
-	    return null;
+	        returnList.add(vertexUnderEvaluation);
+	       
+	        for (Vertex v : graph.getDownstreamNeighbors(vertexUnderEvaluation)) {
+	            stagedVertices.addFirst(v);
+	        }
+	    
+	        for (Vertex v : graph.getUpstreamNeighbors(vertexUnderEvaluation)) {
+	            stagedVertices.addFirst(v);
+	        }
+	      
+	    }
+	   
+	    return returnList;
 	}
 	
 	/**
@@ -145,7 +203,7 @@ public class Algorithms {
          */
         
         BreadthFirstSearch Bfs = new BreadthFirstSearch() {
-
+            
             public int evaluate(Vertex v, boolean upstream) {
                 
                 //ensure a != b
