@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -36,9 +37,10 @@ public class Algorithms {
 	/**
 	 * 
 	 */
-	public static Set<List<Vertex>> BFS(Graph graph, Vertex startingVertex) {
+	public static Set<List<Vertex>> BFS(Graph graph) {
 	   
-	//   Queue<Vertex> BFSQueue = new LinkedList<Vertex>();
+	    return search(graph, true);
+	  
 	   
       /* useful methods of graph 
        graph.edgeExists(v1, v2);
@@ -46,7 +48,6 @@ public class Algorithms {
        graph.getUpstreamNeighbors(v);
 	   */
 	    
-	    return null;
 	    
 	}
 	
@@ -142,8 +143,7 @@ public class Algorithms {
          * evaluate first staged vertex if not checked before
          *  -   evaluate:
          *      -   check if equal 
-         *      -   stage connected vertices 
-         * 
+         *      -   stage connected vertices  
          */
         
         BreadthFirstSearch Bfs = new BreadthFirstSearch() {
