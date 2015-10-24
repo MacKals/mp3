@@ -2,6 +2,7 @@ package TwitterAnalysis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -57,9 +58,15 @@ public class TwitterAnalysis {
                 break;
             }
         }
-                
-        //TODO: print file
         
+        //print file
+        try {
+            PrintWriter out = new PrintWriter(outputFile);
+            out.println(output);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }        
     }
     
     private static class Query {
