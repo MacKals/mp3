@@ -176,13 +176,13 @@ public class Algorithms {
         }
 
         // compare all neighbours of a to neighbours of b using the .edgeExists method of the graph
-        for (Vertex aNeighbour : aNeighbours) {
+        for (Vertex neighbour : aNeighbours) {
 
-            if (graph.edgeExists(b, aNeighbour)) {
+            if (graph.edgeExists(b, neighbour)) {
                 commonVertices.add(b);
             }
 
-            if (graph.edgeExists(b, aNeighbour)) {      
+            if (graph.edgeExists(b, neighbour)) {      
                 commonVertices.add(b);
             }
         }
