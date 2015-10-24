@@ -2,6 +2,7 @@ package TwitterAnalysis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -32,49 +33,117 @@ public class TwitterAnalysis {
         File outputFile = new File(args[1]);
         
         //get input queries
-        List<String> queries = getQueriesFromFile(queriesFile);
+        List<Query> queries = Query.getQueriesFromFile(queriesFile);
         
-        
-        
+        //generate graph
         File file = new File(twitterFile);
         Graph graph = fileToGraph(file);
         
-        Vertex a = new Vertex("1"); //fill in string
-        Vertex b = new Vertex("5"); //fill in string
-        
+        //generate output
         String output = new String();
         
-        int retweets = Algorithms.shortestDistance(graph, a, b);
-        output += printNumRetweets(retweets, a, b);
-        
-        List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, a, b);
-        output += printCommonInfluencers(commonInfluencers, a, b);
+        for (Query query : queries) {
+            
+            switch (query.getQuery()) {
+            
+            case CommonInfluencers:
+                List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, query.getA(), query.getB());
+                output += printCommonInfluencers(commonInfluencers, query.getA(), query.getB());
+                break;
+            
+            case NumRetweets: 
+                int retweets = Algorithms.shortestDistance(graph, query.getA(), query.getB());
+                output += printNumRetweets(retweets, query.getA(), query.getB());
+                break;
+            }
+        }
+                
+        //TODO: print file
         
     }
     
-    private static List<String> getQueriesFromFile(File file) {
+    private static class Query {
         
-        String commonInfluencersTag = "commonInfluencers"; 
-        String numRetweetsTag = "numRetweets";
-        
-        //<query type> <user a> <user b>
-        
-        try{
-            sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                
-                String url = sc.nextLine().trim();
-                int firstSpace = url.indexOf(" ");
-                int secondSpace = url.indexOf(" ", firstSpace + 1);
+        public enum QueryType {
+            CommonInfluencers("commonInfluencers"), NumRetweets("numRetweets");
+            
+            private String description;
+            QueryType(String description) {
+                this.description=description;
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            public String getDescription() {
+                return description;
+            }
+                    
         }
         
-        return null;            
-             
+        private QueryType query;
+        private Vertex vertexA;
+        private Vertex vertexB;
+     
+        public Vertex getA() {
+            return vertexA;
+        }
+        
+        public Vertex getB() {
+            return vertexB;
+        }
+        
+        public QueryType getQuery() {
+            return query;
+        }
+        
+        private static List<Query> getQueriesFromFile(File file) {
+            
+            //<query type> <user a> <user b>
+            
+            List<Query> returnList = new ArrayList<Query>();
+            
+            try{
+                sc = new Scanner(file);
+                while (sc.hasNextLine()) {
+                    
+                    //get indices of string
+                    String url = sc.nextLine().trim();
+                    int firstSpace = url.indexOf(" ");
+                    int secondSpace = url.indexOf(" ", firstSpace + 1);
+                    int questionMark = url.indexOf("?");
+                    
+                    Query queryInstnace = new Query();
+                    
+                    //get substrings and store to queryInstance as appropriate data-types
+                    String queryString = url.substring(0, firstSpace);
+                    if (queryString.equals( Query.QueryType.CommonInfluencers.getDescription() )) {
+                        queryInstnace.query = Query.QueryType.CommonInfluencers;
+                    } else {
+                        queryInstnace.query = Query.QueryType.NumRetweets;
+                    }
+                    
+                    queryInstnace.vertexA = new Vertex(url.substring(firstSpace, secondSpace));
+                    
+                    if (questionMark == -1) {
+                        queryInstnace.vertexA = new Vertex(url.substring(secondSpace));
+                    } else {
+                        //-1 to get to last index, -2 due to ending question-mark and space
+                        queryInstnace.vertexB = new Vertex(url.substring(secondSpace, url.length() - 3));  
+                    }
+                    
+                    returnList.add(queryInstnace);
+                    
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            
+            return returnList;            
+                 
+        }
+        
     }
+    
+    
     
     /** Prints to the console each of the users that are followed by two specified users.
      *  Prints each user identifier on a new line, surrounded by html "result" tags
@@ -82,17 +151,19 @@ public class TwitterAnalysis {
      * @param v1 a vertex corresponding to a Twitter user.
      * @param v2 another vertex corresponding to a Twitter user.
      */
-    private static void printCommonInfluencers(List<Vertex> result, Vertex v1, Vertex v2) {
-        
-        System.out.println("query: commonInfluencers " + v1.toString() + " " + v2.toString()); 
-        System.out.println(openingToken);
+    private static String printCommonInfluencers(List<Vertex> result, Vertex v1, Vertex v2) {
+       
+        String returnString = new String();
+        returnString += "query: commonInfluencers " + v1.toString() + " " + v2.toString() + "\n";
+        returnString += openingToken + "\n";
                
         for (Vertex element : result) {
-            System.out.println(element.toString());
+            returnString += element.toString() + "\n";
         }
 
-        System.out.println(closingToken);
+        returnString += closingToken + "\n";
         
+        return returnString;
     }
     
     /** Prints to the console the minimum number of retweets needed before v1's tweet appears in v2's feed.
@@ -101,13 +172,16 @@ public class TwitterAnalysis {
      * @param v1 first user.    
      * @param v2 second user.
      */
-    private static void printnumRetweets(int result, Vertex v1, Vertex v2) {
+    private static String printNumRetweets(int result, Vertex v1, Vertex v2) {
         
-        System.out.println("query: numRetweets " + v1.toString() + " " + v2.toString()); 
-        System.out.println(openingToken);
-        System.out.println(result);
-        System.out.println(closingToken);
+        String returnString = new String();
         
+        returnString = "query: numRetweets " + v1.toString() + " " + v2.toString() + "\n"; 
+        returnString = openingToken + "\n";
+        returnString = result + "\n";
+        returnString = closingToken + "\n";
+        
+        return returnString;
     }
     
     /** Reads data from a file and returns a Graph object representation that represents a Directed Graph.
