@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
+import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -38,27 +39,34 @@ public class TwitterAnalysis {
         
         //generate graph
         File file = new File(twitterFile);
-        Graph graph = fileToGraph(file);
+        Graph graph = fileToGraph(file, true);
         
         //generate output
         String output = new String();
         
         for (Query query : queries) {
             
-            switch (query.getQuery()) {
-            
-            case CommonInfluencers:
-                List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, query.getA(), query.getB());
-                output += printCommonInfluencers(commonInfluencers, query.getA(), query.getB());
-                break;
-            
-            case NumRetweets: 
-                int retweets = Algorithms.shortestDistance(graph, query.getA(), query.getB());
-                output += printNumRetweets(retweets, query.getA(), query.getB());
-                break;
+            try {
+
+                switch (query.getQuery()) {
+                
+                case CommonInfluencers:
+                    List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, query.getA(), query.getB());
+                    output += printCommonInfluencers(commonInfluencers, query.getA(), query.getB());
+                    break;
+                
+                case NumRetweets: 
+                    int retweets = Algorithms.shortestDistance(graph, query.getA(), query.getB(), true);
+                    output += printNumRetweets(retweets, query.getA(), query.getB());
+                    break;
+                }
+            } finally {
+                if (query.hasQuestinmark()) {
+                    continue;
+                }              
             }
         }
-        
+         
         //print file
         try {
             PrintWriter out = new PrintWriter(outputFile);
@@ -88,7 +96,8 @@ public class TwitterAnalysis {
         private QueryType query;
         private Vertex vertexA;
         private Vertex vertexB;
-     
+        private boolean hasQuestionmark;
+        
         public Vertex getA() {
             return vertexA;
         }
@@ -99,6 +108,11 @@ public class TwitterAnalysis {
         
         public QueryType getQuery() {
             return query;
+        }
+        
+        public boolean hasQuestinmark() {
+            if (hasQuestionmark) return true;
+            return false;
         }
         
         private static List<Query> getQueriesFromFile(File file) {
@@ -130,8 +144,10 @@ public class TwitterAnalysis {
                     queryInstnace.vertexA = new Vertex(url.substring(firstSpace, secondSpace));
                     
                     if (questionMark == -1) {
+                        queryInstnace.hasQuestionmark = false;
                         queryInstnace.vertexA = new Vertex(url.substring(secondSpace));
                     } else {
+                        queryInstnace.hasQuestionmark = true;
                         //-1 to get to last index, -2 due to ending question-mark and space
                         queryInstnace.vertexB = new Vertex(url.substring(secondSpace, url.length() - 3));  
                     }
@@ -196,9 +212,12 @@ public class TwitterAnalysis {
      * @param file the file to read from.
      * @return A graph that represents the data from the file as a Directed Graph.
      */
-    public static Graph fileToGraph(File file){
+    public static Graph fileToGraph(File file, boolean adjacencyList){
         
-        Graph buildGraph = new AdjacencyListGraph();
+        //determine whether to use list or matrix for internal representation
+        Graph buildGraph;
+        if (adjacencyList) buildGraph = new AdjacencyListGraph();
+        else buildGraph = new AdjacencyMatrixGraph();
         
         /*
          * In order to determine whether the vertex has been added to graph previously we here 
@@ -206,18 +225,10 @@ public class TwitterAnalysis {
          * A better solution would be to handle this internally, but the interface makes this impossible. 
          */
         Set<String> addedVertices = new TreeSet<String>();
-                
-        int j = 0;
-        
+                        
         try{
             sc = new Scanner(file);
             while (sc.hasNextLine()){
-                
-                if ( j % 100 == 0 ) {
-                    System.out.println(j);
-                }
-                
-                j++;
                 
                 String url = sc.nextLine().trim();
                 int i = url.indexOf(" -> ");

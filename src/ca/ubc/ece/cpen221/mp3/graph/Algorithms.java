@@ -83,15 +83,16 @@ public class Algorithms {
 	        Vertex vertexUnderEvaluation;
 	        
 	        if (BFS) {    
-	            vertexUnderEvaluation = stagedVertices.removeLast();   //queue behaviour
+	            vertexUnderEvaluation = stagedVertices.removeLast();   //queue behavior
 	        } else {       
-	            vertexUnderEvaluation = stagedVertices.removeFirst();  //stack behaviour
+	            vertexUnderEvaluation = stagedVertices.removeFirst();  //stack behavior
 	        }
 	        
 	        if (checkedVertices.contains(vertexUnderEvaluation)) {
 	            continue;
 	        }
 	        
+	        checkedVertices.add(vertexUnderEvaluation);
 	        returnList.add(vertexUnderEvaluation);
 	        
 	        for (Vertex v : graph.getDownstreamNeighbors(vertexUnderEvaluation)) {
@@ -115,27 +116,7 @@ public class Algorithms {
 	 * If there are no upstream neighbours, returns an empty list. 
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
-	 /*   
-	    List<Vertex> commonUpstreamVertices = new ArrayList<Vertex>();
-	    
-	    //get neighbour of a
-	    List<Vertex> aNeighbours = graph.getDownstreamNeighbors(a);
 
-	    // compare all neighbours of a to neighbours of b using the .edgeExists method of the graph
-	    for (Vertex aNeighbour : aNeighbours) {
-
-	        if (graph.edgeExists(b, aNeighbour)) {
-	        
-	            commonUpstreamVertices.add(b);
-	        }
-
-	        if (graph.edgeExists(b, aNeighbour)) {      
-	            commonUpstreamVertices.add(b);
-
-	        }
-	    }
-	    
-	    return Collections.unmodifiableList(commonUpstreamVertices);*/
 	    return commonVertices(graph, a, b, true);
 	}
 	
@@ -147,18 +128,7 @@ public class Algorithms {
      * If there are no downstream neighbours, returns an empty list.
      */
 	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b){
-	    
-	    /*List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
-	    
-	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(a);
-	    
-	    for (Vertex elementInA : downstreamFromA){
-	        if (graph.edgeExists(b, elementInA)){
-	                commonDownstreamList.add(elementInA);
-	        }    
-	    }
-	
-	    return Collections.unmodifiableList(commonDownstreamList);*/
+	   
 	    return commonVertices(graph, a, b, false);
 	}
 	
@@ -207,7 +177,7 @@ public class Algorithms {
 	 * @return an integer of the smallest number of edges between vertex a and b. 
 	 * Returns -1 if there is no path between the two vertices.
 	 */
-    public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
+    public static int shortestDistance(Graph graph, Vertex a, Vertex b, boolean evaluateDownstreamOnly) {
                         
         int NotFound = -1;
 
@@ -268,7 +238,9 @@ public class Algorithms {
                 return NotFound;
             }
         };
-                
+        
+        if (evaluateDownstreamOnly) return Bfs.evaluate(a, false);
+        
         int distanceUpstream = Bfs.evaluate(a, true);
         int distanceDownstream = Bfs.evaluate(a, false);
         
