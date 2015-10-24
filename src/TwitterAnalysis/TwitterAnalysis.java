@@ -55,12 +55,25 @@ public class TwitterAnalysis {
     private static List<String> getQueriesFromFile(File file) {
         
         String commonInfluencersTag = "commonInfluencers"; 
-        String "numRetweets"
+        String numRetweetsTag = "numRetweets";
         
         //<query type> <user a> <user b>
         
+        try{
+            sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                
+                String url = sc.nextLine().trim();
+                int firstSpace = url.indexOf(" ");
+                int secondSpace = url.indexOf(" ", firstSpace + 1);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         
-        
+        return null;            
+             
     }
     
     /** Prints to the console each of the users that are followed by two specified users.
