@@ -19,7 +19,7 @@ public class GraphTest {
     private static String mediumFile = "datasets/MediumDataset.txt";
     
     @Test
-    public void test() {
+    public void Test() { // want the list of commonInfluencers to contain 2, 3, 4 in this order.
         
         File file = new File(mediumFile);
         Graph graph = TwitterAnalysis.fileToGraph(file);
@@ -35,12 +35,12 @@ public class GraphTest {
         
         List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, a, b);
         
-        assertEquals(vertex.toString(), );
-
+        assert(commonInfluencers.get(0).toString().equals("2"));
+        assert(commonInfluencers.get(1).toString().equals("3"));
+        assert(commonInfluencers.get(2).toString().equals("4"));
         
-        for (Vertex vertex : commonInfluencers) {
-        }
-        
+        // 
+       
     }
 
 }

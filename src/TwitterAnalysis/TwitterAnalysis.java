@@ -102,7 +102,7 @@ public class TwitterAnalysis {
      * @param file the file to read from.
      * @return A graph that represents the data from the file as a Directed Graph.
      */
-    private static Graph fileToGraph(File file){
+    public static Graph fileToGraph(File file){
         
         Graph buildGraph = new AdjacencyListGraph();
         
