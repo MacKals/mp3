@@ -28,10 +28,12 @@ public class TwitterAnalysis {
     
     private static String twitterFile = "datasets/twitter.txt";
     private static String simpleFile = "datasets/SimpleDataset.txt";
+    private static String mediumFile = "datasets/MediumDataset.txt";
+
     
     public static void main(String[] args){
         
-        File file = new File(simpleFile);
+        File file = new File(mediumFile);
         Graph graph = fileToGraph(file);
         
         System.out.println("File loaded");

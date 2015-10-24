@@ -91,17 +91,17 @@ public class Algorithms {
 	        if (checkedVertices.contains(vertexUnderEvaluation)) {
 	            continue;
 	        }
-	       
+	        
 	        returnList.add(vertexUnderEvaluation);
-	       
+	        
 	        for (Vertex v : graph.getDownstreamNeighbors(vertexUnderEvaluation)) {
 	            stagedVertices.addFirst(v);
 	        }
-	    
+	        
 	        for (Vertex v : graph.getUpstreamNeighbors(vertexUnderEvaluation)) {
 	            stagedVertices.addFirst(v);
 	        }
-	      
+	        
 	    }
 	   
 	    return returnList;
@@ -188,11 +188,7 @@ public class Algorithms {
         for (Vertex neighbour : aNeighbours) {
 
             if (graph.edgeExists(b, neighbour)) {
-                commonVertices.add(b);
-            }
-
-            if (graph.edgeExists(b, neighbour)) {      
-                commonVertices.add(b);
+                commonVertices.add(neighbour);
             }
         }
         
