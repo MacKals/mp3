@@ -162,6 +162,15 @@ public class Algorithms {
 	    return commonVertices(graph, a, b, false);
 	}
 	
+	 /** Computes all vertices with a direct edge to both vertex a and vertex b, either upstream or downstream.
+	  * Upstream vertices are those with edges pointed towards the vertex in question, and downstream vertices are the inverse.
+     * @param graph Graph to be analyzed 
+     * @param a first vertex
+     * @param b second vertex
+     * @param upstream true if the upstream vertices are desired, false if downstream.
+     * @return list of common neighbours to both vertA and vertB. 
+     * If there are no downstream neighbours, returns an empty list.
+     */
 	private static List<Vertex> commonVertices(Graph graph, Vertex a, Vertex b, boolean upstream) {
         
         List<Vertex> commonVertices = new ArrayList<Vertex>();

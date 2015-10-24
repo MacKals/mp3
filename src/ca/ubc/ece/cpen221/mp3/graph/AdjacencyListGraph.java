@@ -38,7 +38,7 @@ public class AdjacencyListGraph implements Graph {
                 
                 for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
                     
-                    if ( adjacencyList.get(i).get(i).equals(v2)){
+                    if ( adjacencyList.get(i).get(i2).equals(v2)){
                         return true;
                     }
                 }

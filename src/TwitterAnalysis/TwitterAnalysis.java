@@ -2,11 +2,6 @@ package TwitterAnalysis;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.AbstractSet;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,6 +13,12 @@ import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
+
+/** Performs an analys
+ * 
+ * @author erikmaclennan, mkals
+ *
+ */
 public class TwitterAnalysis {
 
     private static Scanner sc;
