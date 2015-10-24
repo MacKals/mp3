@@ -115,7 +115,7 @@ public class Algorithms {
 	 * If there are no upstream neighbours, returns an empty list. 
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
-	    
+	 /*   
 	    List<Vertex> commonUpstreamVertices = new ArrayList<Vertex>();
 	    
 	    //get neighbour of a
@@ -135,7 +135,8 @@ public class Algorithms {
 	        }
 	    }
 	    
-	    return Collections.unmodifiableList(commonUpstreamVertices);
+	    return Collections.unmodifiableList(commonUpstreamVertices);*/
+	    return commonVertices(graph, a, b, true);
 	}
 	
     /** Computes all downstream vertices with a direct edge to both vertex a and vertex b
@@ -145,21 +146,49 @@ public class Algorithms {
      * @return list of common downstream neighbours to both vertA and vertB. 
      * If there are no downstream neighbours, returns an empty list.
      */
-	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex vertA, Vertex vertB){
+	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b){
 	    
-	    List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
+	    /*List<Vertex> commonDownstreamList = new ArrayList<Vertex>();
 	    
-	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(vertA);
+	    List<Vertex> downstreamFromA = graph.getDownstreamNeighbors(a);
 	    
 	    for (Vertex elementInA : downstreamFromA){
-	        if (graph.edgeExists(vertB, elementInA)){
+	        if (graph.edgeExists(b, elementInA)){
 	                commonDownstreamList.add(elementInA);
 	        }    
 	    }
 	
-	    return Collections.unmodifiableList(commonDownstreamList);
+	    return Collections.unmodifiableList(commonDownstreamList);*/
+	    return commonVertices(graph, a, b, false);
 	}
 	
+	private static List<Vertex> commonVertices(Graph graph, Vertex a, Vertex b, boolean upstream) {
+        
+        List<Vertex> commonVertices = new ArrayList<Vertex>();
+        
+        List<Vertex> aNeighbours;
+
+        //get neighbours of a in appropriate direction
+        if (upstream) {
+            aNeighbours = graph.getUpstreamNeighbors(a);
+        } else {
+            aNeighbours = graph.getDownstreamNeighbors(a);
+        }
+
+        // compare all neighbours of a to neighbours of b using the .edgeExists method of the graph
+        for (Vertex aNeighbour : aNeighbours) {
+
+            if (graph.edgeExists(b, aNeighbour)) {
+                commonVertices.add(b);
+            }
+
+            if (graph.edgeExists(b, aNeighbour)) {      
+                commonVertices.add(b);
+            }
+        }
+        
+        return Collections.unmodifiableList(commonVertices);
+    }
 	 
 	interface BreadthFirstSearch {
 	    int evaluate(Vertex v, boolean upstream);   
