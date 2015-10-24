@@ -8,16 +8,13 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
-import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
 import ca.ubc.ece.cpen221.mp3.graph.Algorithms;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 
-/** Performs an analys
- * 
+/** Performs an analysis on a dataset from Twitter.
  * @author erikmaclennan, mkals
- *
  */
 public class TwitterAnalysis {
 
@@ -53,7 +50,12 @@ public class TwitterAnalysis {
         
     }
     
-
+    /** Prints to the console each of the users that are followed by two specified users.
+     *  Prints each user identifier on a new line, surrounded by html "result" tags
+     * @param result a list of all common influencers. Each user is represented by a vertex object
+     * @param v1 a vertex corresponding to a Twitter user.
+     * @param v2 another vertex corresponding to a Twitter user.
+     */
     private static void printCommonInfluencers(List<Vertex> result, Vertex v1, Vertex v2) {
         
         System.out.println("query: commonInfluencers " + v1.toString() + " " + v2.toString()); 
@@ -67,6 +69,12 @@ public class TwitterAnalysis {
         
     }
     
+    /** Prints to the console the minimum number of retweets needed before v1's tweet appears in v2's feed.
+     * This integer is surrounded by html "result" tags.
+     * @param result an integer representing the minimum number of retweets
+     * @param v1 first user.    
+     * @param v2 second user.
+     */
     private static void printnumRetweets(int result, Vertex v1, Vertex v2) {
         
         System.out.println("query: numRetweets " + v1.toString() + " " + v2.toString()); 
@@ -76,6 +84,11 @@ public class TwitterAnalysis {
         
     }
     
+    /** Reads data from a file and returns a Graph object representation that represents a Directed Graph.
+     * The file must be contain two user identifiers on each line, separated by an "->".
+     * @param file the file to read from.
+     * @return A graph that represents the data from the file as a Directed Graph.
+     */
     private static Graph fileToGraph(File file){
         
         Graph buildGraph = new AdjacencyListGraph();
