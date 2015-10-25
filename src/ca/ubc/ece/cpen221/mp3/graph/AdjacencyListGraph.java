@@ -21,7 +21,7 @@ public class AdjacencyListGraph implements Graph {
         for (int i = 0; i < adjacencyList.size(); i++){
            
            //we found the vertex v1, and we don't have this edge already, then add it
-            if (adjacencyList.get(i).get(0).equals(v1) && !adjacencyList.get(i).contains(v2)){ 
+            if (adjacencyList.get(i).get(0).equals(v1)){ 
                 
                 adjacencyList.get(i).add(v2); //add the edge
                 break;

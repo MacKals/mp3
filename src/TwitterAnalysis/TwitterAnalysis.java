@@ -239,7 +239,7 @@ public class TwitterAnalysis {
             sc = new Scanner(file);
             while (sc.hasNextLine()){
                 
-                if (j % 100 == 0) {
+                if (j % 1000 == 0) {
                     System.out.println(j + ", "); 
                     
                 }
@@ -258,11 +258,11 @@ public class TwitterAnalysis {
                 Vertex vertex2 = new Vertex(string2);
                 
                 //adds the vertices to the graph if they don't exist already
-                if ( !addedVertices.contains(string1) ) {
+                if (! addedVertices.contains(string1) ) {
                     buildGraph.addVertex(vertex1);
                     addedVertices.add(string1);
                 }
-                if ( !addedVertices.contains(string2) ){
+                if (! addedVertices.contains(string2) ){
                     buildGraph.addVertex(vertex2);
                     addedVertices.add(string2);
                 }
