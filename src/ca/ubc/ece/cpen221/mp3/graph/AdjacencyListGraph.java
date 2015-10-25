@@ -1,4 +1,5 @@
 package ca.ubc.ece.cpen221.mp3.graph;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class AdjacencyListGraph implements Graph {
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
-        List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
+        List<Vertex> downstreamNeighboursList = new ArrayList<Vertex>();
         
        
         
@@ -48,13 +49,13 @@ public class AdjacencyListGraph implements Graph {
             downstreamNeighboursList.add(new Vertex(vertex));    //defensive copy
         }
         System.out.println("List of downstream neighbours to " + v +  " in AdjacencyList:" + downstreamNeighboursList);
-        return Collections.unmodifiableList(downstreamNeighboursList);
+        return downstreamNeighboursList;
     }
 
 
     public List<Vertex> getUpstreamNeighbors(Vertex vertex) {
         
-        List<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
+        List<Vertex> upstreamNeighboursList = new ArrayList<Vertex>();
         
         for (int i = 0; i < vertexList.size(); i++) {
             if (adjacencyList.get(i).contains(vertex.getLabel())) {
