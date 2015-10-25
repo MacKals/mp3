@@ -109,7 +109,7 @@ public class GraphTest {
     @Test
     public void testMain() {
         
-        String[] input= {"numRetweets 14838508 98032178 ?", "output.txt"}; 
+        String[] input= {"datasets/QueryFile1.txt", "output.txt"}; 
         
         TwitterAnalysis.main(input);
         
