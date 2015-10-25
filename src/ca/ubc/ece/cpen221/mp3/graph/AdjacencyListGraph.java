@@ -14,8 +14,10 @@ public class AdjacencyListGraph implements Graph {
     
     public void addVertex(Vertex v) {
         
-        adjacencyList.add(new LinkedList<String>());
-        vertexList.add(v.getLabel());
+        if (!vertexList.contains(v)){
+            adjacencyList.add(new LinkedList<String>());
+            vertexList.add(v.getLabel());
+        }     
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
@@ -24,8 +26,7 @@ public class AdjacencyListGraph implements Graph {
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
-        
-
+       
         if (adjacencyList.get(vertexList.indexOf(v1.getLabel())).contains(v2.getLabel())){
 
             return true;
@@ -38,12 +39,14 @@ public class AdjacencyListGraph implements Graph {
         
         List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
         
+        System.out.print("List of vertices in AdjacencyList:" + vertexList);
+        
         int index = vertexList.indexOf(v.getLabel());
                  
         for (String vertex : adjacencyList.get(index)){
             downstreamNeighboursList.add(new Vertex(vertex));    //defensive copy
         }
-        
+        System.out.println("List of downstream neighbours to " + v +  " in AdjacencyList:" + downstreamNeighboursList);
         return Collections.unmodifiableList(downstreamNeighboursList);
     }
 
@@ -54,10 +57,10 @@ public class AdjacencyListGraph implements Graph {
         
         for (int i = 0; i < vertexList.size(); i++) {
             if (adjacencyList.contains(vertex)) {
-                upstreamNeighboursList.add( new Vertex(vertexList.get(i)) );
+                upstreamNeighboursList.add( new Vertex(vertexList.get(i)));
             }
         }
-        
+        System.out.println("List of upstream neighbours to " + vertex + " in AdjacencyList: " + upstreamNeighboursList);
         return upstreamNeighboursList;
     }
 
