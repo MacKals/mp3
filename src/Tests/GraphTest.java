@@ -116,7 +116,7 @@ public class GraphTest {
     public void TestAlgorythmsRepresentations() { 
         
         File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, false);
+        Graph graph = TwitterAnalysis.fileToGraph(file, true);
         
         Vertex a = new Vertex("1");
         Vertex b = new Vertex("4");

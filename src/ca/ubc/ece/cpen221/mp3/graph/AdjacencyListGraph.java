@@ -17,7 +17,8 @@ public class AdjacencyListGraph implements Graph {
         if (!vertexList.contains(v)){
             adjacencyList.add(new LinkedList<String>());
             vertexList.add(v.getLabel());
-        }     
+        } 
+        System.out.println("List of vertices in AdjacencyList:" + vertexList);
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
@@ -39,7 +40,7 @@ public class AdjacencyListGraph implements Graph {
         
         List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
         
-        System.out.print("List of vertices in AdjacencyList:" + vertexList);
+       
         
         int index = vertexList.indexOf(v.getLabel());
                  
@@ -56,7 +57,7 @@ public class AdjacencyListGraph implements Graph {
         List<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
         for (int i = 0; i < vertexList.size(); i++) {
-            if (adjacencyList.contains(vertex)) {
+            if (adjacencyList.get(i).contains(vertex.getLabel())) {
                 upstreamNeighboursList.add( new Vertex(vertexList.get(i)));
             }
         }
