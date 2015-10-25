@@ -20,21 +20,7 @@ public class AdjacencyListGraph implements Graph {
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-//        for (int i = 0; i < adjacencyList.size(); i++){
-//           
-//           //we found the vertex v1, and we don't have this edge already, then add it
-//            if (adjacencyList.get(i).get(0).equals(v1)){ 
-//                
-//                adjacencyList.get(i).add(v2); //add the edge
-//                break;
-//            }
-//        }
-        
-        LinkedList<Vertex> v2List = new LinkedList<Vertex>();
-        v2List.add(v2);
-        
-        
-        adjacencyList.add(vertexList.indexOf(v1), v2List);
+        adjacencyList.get(vertexList.indexOf(v1)).add(v2);
         
     }
 
