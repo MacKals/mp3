@@ -20,10 +20,7 @@ public class AdjacencyListGraph implements Graph {
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-
         adjacencyList.get(vertexList.indexOf(v1.hashCode())).add(v2.hashCode());
-        
-
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
@@ -55,9 +52,9 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         LinkedList<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (List<Integer> vertices : adjacencyList) {
-            for (Integer vertex : vertices) {
-                if (v.equals(vertex)) {
+        for (List<Integer> verticesHash : adjacencyList) {
+            for (Integer vertexHash : verticesHash) {
+                if (v.hashCode() == vertexHash) {
                     upstreamNeighboursList.add(v);
                 }
             }
