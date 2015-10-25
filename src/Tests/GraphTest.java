@@ -116,12 +116,12 @@ public class GraphTest {
     public void TestAlgorythmsRepresentations() { 
         
         File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+        Graph graph = TwitterAnalysis.fileToGraph(file, false);
         
         Vertex a = new Vertex("1");
         Vertex b = new Vertex("4");
-        Vertex c = new Vertex("1");
-        Vertex d = new Vertex("5");
+        Vertex c = new Vertex("5");
+        Vertex d = new Vertex("2");
         
         //test shortest distance with two different set of vertices against known values
         int shortastDistanceAB = Algorithms.shortestDistance(graph, a, b, false);
@@ -137,6 +137,17 @@ public class GraphTest {
         
         assertEquals(shortastDistanceCD, 1);
         assertEquals(shortastDistanceDownstreamOnlyCD, 1);
+        
+        
+        //testing common upstream vertices against known values
+        
+        List<Vertex> commonUpstreamAB = Algorithms.commonUpstreamVertices(graph, a, b);
+        List<Vertex> commonUpstreamCD = Algorithms.commonUpstreamVertices(graph, c, d);
+
+        
+        
+        
+        List<Vertex> commonDownstreamAB = Algorithms.commonDownstreamVertices(graph, a, b);
         
         
         

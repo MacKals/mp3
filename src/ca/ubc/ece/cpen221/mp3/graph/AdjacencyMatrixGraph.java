@@ -12,7 +12,7 @@ public class AdjacencyMatrixGraph implements Graph {
     
     //matrix of mappings from element in outer array to element in inner array (from first dimension to second)
     List<ArrayList<Boolean>> matrix = new ArrayList<ArrayList<Boolean>>();
-    List<Vertex> vertices = new ArrayList<Vertex>();
+    List<String> vertices = new ArrayList<String>();
     
     public void addVertex(Vertex v) {
         
@@ -22,7 +22,7 @@ public class AdjacencyMatrixGraph implements Graph {
         }
         
         //add Vertex to vector
-        vertices.add(v);
+        vertices.add(v.getLabel());
         
         //add final row to matrix to get a (n+1,n+1) square matrix
         matrix.add( new ArrayList<Boolean>( Collections.nCopies(vertices.size(), false) ) );
@@ -30,47 +30,57 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-        Vertex[] vertexArray= {v1, v2};
-        int[] indecies = indexOfVertices( vertexArray );
+        int v1Index = vertices.indexOf(v1.getLabel());
+        int v2Index = vertices.indexOf(v2.getLabel());
         
-        matrix.get(indecies[0]).set(indecies[1], true);
+        matrix.get(v1Index).set(v2Index, true);
+        
+        for (String vertexLabel : vertices) {
+            System.out.println(vertexLabel);
+        }
+        
+        for (List<Boolean> list : matrix) {
+            for (Boolean label : list) {
+                System.out.print("  " + label);
+            }
+            System.out.println("");
+        }
+        
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
 
-        Vertex[] vertexArray= {v1, v2};
-        int[] indecies = indexOfVertices( vertexArray );
+        int v1Index = vertices.indexOf(v1.getLabel());
+        int v2Index = vertices.indexOf(v2.getLabel());
         
-        return matrix.get(indecies[0]).get(indecies[1]);  
+        return matrix.get(v1Index).get(v2Index);  
     }
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
         List<Vertex> down = new LinkedList<Vertex>();
         
-        Vertex[] vertexArray = {v};
-        int[] indices = indexOfVertices( vertexArray );
-        int vertexIndex = indices[0];
+        int vIndex = vertices.indexOf(v.getLabel());
         
         for (int i = 0; i < vertices.size(); i++) {
-            if (matrix.get(vertexIndex).get(i)) {
-                down.add(new Vertex( vertices.get(i).toString() ));     //defensive copying
+            if (matrix.get(vIndex).get(i)) {
+                down.add(new Vertex( vertices.get(i) ));     //defensive copying                
             }
         }
+        
         
         return down;
     }
 
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
+       
         List<Vertex> up = new LinkedList<Vertex>();
         
-        Vertex[] vertexArray = {v};
-        int[] indices = indexOfVertices( vertexArray );
-        int vertexIndex = indices[0];
+        int vIndex = vertices.indexOf(v.getLabel());
         
         for (int i = 0; i < vertices.size(); i++) {
-            if (matrix.get(i).get(vertexIndex)) {
-                up.add(new Vertex( vertices.get(i).toString() ));   //defensive copying
+            if (matrix.get(i).get(vIndex)) {
+                up.add(new Vertex( vertices.get(i).toString() ));    //defensive copying
             }
         }
         
@@ -79,24 +89,14 @@ public class AdjacencyMatrixGraph implements Graph {
 
     public List<Vertex> getVertices() {    
         
-        return Collections.unmodifiableList(vertices);  
+        List<Vertex> returnList = new ArrayList<Vertex>();
+        
+        for (String label : vertices) {
+            returnList.add(new Vertex(label));
+        }
+        
+        return returnList;  
         
     }
     
-    private int[] indexOfVertices( Vertex[] vertexArray ) {
-        
-        int[] indices = new int[ vertexArray.length ];
-        
-        for ( int i = 0; i < vertices.size(); i++ ) {
-            for ( int j = 0; j < vertexArray.length; j++ ) {
-                if (vertices.get(i).equals(vertexArray[j])) {
-                    indices[j] = i;
-                }
-            }
-            
-        }        
-        
-        return indices;
-        
-    } 
 }

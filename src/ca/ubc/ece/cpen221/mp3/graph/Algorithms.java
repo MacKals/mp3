@@ -220,13 +220,13 @@ public class Algorithms {
                     
                     for (Vertex vertex : directionalVerticesOfVertex) {
                         
-                        if (vertex.equals(b)) {
-                            return traversedDistance;
-                        }
-                        
                         if (!checkedVertices.contains(vertex)) {
                             stagedVertices.add(vertex);
                             checkedVertices.add(vertex);
+                        }
+                        
+                        if (vertex.equals(b)) {
+                            return traversedDistance;
                         }
                         
                     }   
