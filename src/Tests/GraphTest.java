@@ -62,7 +62,7 @@ public class GraphTest {
         
         File file = new File(mediumFile);
         Graph graphList = TwitterAnalysis.fileToGraph(file, true);
-        Graph graphMatrix = TwitterAnalysis.fileToGraph(file, true);
+        Graph graphMatrix = TwitterAnalysis.fileToGraph(file, false);
 
         System.out.println("representations loaded");
         
@@ -144,7 +144,7 @@ public class GraphTest {
         
     }
     
-    @Test
+   // @Test
     public void testMain() {
         
         String[] input= {"datasets/QueryFile1.txt", "datasets/output.txt"}; 
