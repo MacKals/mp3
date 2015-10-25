@@ -57,7 +57,7 @@ public class AdjacencyMatrixGraph implements Graph {
             }
         }
         
-        System.out.println();
+        System.out.println("getDownstreamNeighbors from matrix: " + down);
         
         return down;
     }
@@ -73,6 +73,8 @@ public class AdjacencyMatrixGraph implements Graph {
                 up.add(new Vertex( vertices.get(i).toString() ));    //defensive copying
             }
         }
+        
+        System.out.println("getUpstreamNeighbors from matrix: " + up);
         
         return up;
     }
