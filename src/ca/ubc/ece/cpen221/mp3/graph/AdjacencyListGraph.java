@@ -8,25 +8,25 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
     
-    private List<LinkedList<Integer>> adjacencyList = new LinkedList<LinkedList<Integer>>();
-    private List<Integer> vertexList = new LinkedList<Integer>();
+    private List<LinkedList<String>> adjacencyList = new LinkedList<LinkedList<String>>();
+    private List<String> vertexList = new LinkedList<String>();
     
     
     public void addVertex(Vertex v) {
         
-        adjacencyList.add(new LinkedList<Integer>());
-        vertexList.add(v.hashCode());
+        adjacencyList.add(new LinkedList<String>());
+        vertexList.add(v.getLabel());
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-        adjacencyList.get(vertexList.indexOf(v1.hashCode())).add(v2.hashCode());
+        adjacencyList.get(vertexList.indexOf(v1.getLabel())).add(v2.getLabel());
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         
 
-        if (adjacencyList.get(vertexList.indexOf(v1.hashCode())).contains(v2.hashCode())){
+        if (adjacencyList.get(vertexList.indexOf(v1.getLabel())).contains(v2.getLabel())){
 
             return true;
         }
@@ -38,11 +38,11 @@ public class AdjacencyListGraph implements Graph {
         
         List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
         
-        int index = vertexList.indexOf(v.hashCode());
+        int index = vertexList.indexOf(v.getLabel());
                  
-        for (Integer vertex : adjacencyList.get(index)){
+        for (String vertex : adjacencyList.get(index)){
             
-            downstreamNeighboursList.add(new Vertex(vertex.toString()));    //defensive copy
+            downstreamNeighboursList.add(new Vertex(vertex));    //defensive copy
         }
         
         return Collections.unmodifiableList(downstreamNeighboursList);
@@ -50,12 +50,13 @@ public class AdjacencyListGraph implements Graph {
 
 
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
+        
         LinkedList<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (List<Integer> verticesHash : adjacencyList) {
-            for (Integer vertexHash : verticesHash) {
-                if (v.hashCode() == vertexHash) {
-                    upstreamNeighboursList.add(v);
+        for (List<String> vertices : adjacencyList) {
+            for (String vertex : vertices) {
+                if (v.getLabel() == vertex) {
+                    upstreamNeighboursList.add(new Vertex(vertexList.get(adjacencyList.indexOf(vertices))));
                 }
             }
         }
@@ -68,8 +69,8 @@ public class AdjacencyListGraph implements Graph {
         
         List<Vertex> returnList = new LinkedList<Vertex>();
         
-        for (Integer entry : vertexList){
-            returnList.add(new Vertex(entry.toString()));
+        for (String entry : vertexList){
+            returnList.add(new Vertex(entry));
         }
         return returnList; 
     }
