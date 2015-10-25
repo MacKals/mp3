@@ -230,7 +230,7 @@ public class TwitterAnalysis {
             sc = new Scanner(file);
             while (sc.hasNextLine()){
                 
-                String url = sc.nextLine().trim();
+                String url = sc.nextLine();//.trim();
                 int i = url.indexOf(" -> ");
                 
                 //generate substrings from line in file
