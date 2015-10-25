@@ -107,7 +107,7 @@ public class GraphTest {
 
     }
     
-   // @Test
+    // @Test
     public void testMain() {
         
         String[] input= {"datasets/QueryFile1.txt", "datasets/output.txt"}; 
