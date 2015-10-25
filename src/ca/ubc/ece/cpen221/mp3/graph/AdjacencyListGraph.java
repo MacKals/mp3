@@ -8,52 +8,38 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
     
-    private List<LinkedList<Vertex>> adjacencyList = new LinkedList<LinkedList<Vertex>>();
-    private List<Vertex> vertexList = new LinkedList<Vertex>();
+    private List<LinkedList<Integer>> adjacencyList = new LinkedList<LinkedList<Integer>>();
+    private List<Integer> vertexList = new LinkedList<Integer>();
     
     
     public void addVertex(Vertex v) {
         
-        adjacencyList.add(new LinkedList<Vertex>());
-        vertexList.add(v);
+        adjacencyList.add(new LinkedList<Integer>());
+        vertexList.add(v.hashCode());
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-        adjacencyList.get(vertexList.indexOf(v1)).add(v2);
+        adjacencyList.get(vertexList.indexOf(v1.hashCode())).add(v2.hashCode());
         
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         
-//        for (int i = 0; i < adjacencyList.size(); i++){
-//            
-//            if (adjacencyList.get(i).get(0).equals(v1)){
-//                
-//                for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-//                    
-//                    if ( adjacencyList.get(i).get(i2).equals(v2)){
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//        
-//        return false; 
-        
-        if (adjacencyList.get(vertexList.indexOf(v1)).contains(v2)){
+        if (adjacencyList.get(vertexList.indexOf(v1.hashCode())).contains(v2.hashCode())){
             return true;
         }
         return false;
+        
     }
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
         List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
         
-        int index = vertexList.indexOf(v);
+        int index = vertexList.indexOf(v.hashCode());
                  
-        for (Vertex vertex : adjacencyList.get(index)){
+        for (Integer vertex : adjacencyList.get(index)){
             
             downstreamNeighboursList.add(new Vertex(vertex.toString()));    //defensive copy
         }
@@ -65,8 +51,8 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         LinkedList<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (List<Vertex> vertices : adjacencyList) {
-            for (Vertex vertex : vertices) {
+        for (List<Integer> vertices : adjacencyList) {
+            for (Integer vertex : vertices) {
                 if (v.equals(vertex)) {
                     upstreamNeighboursList.add(v);
                 }
@@ -79,6 +65,11 @@ public class AdjacencyListGraph implements Graph {
 
     public List<Vertex> getVertices() {
         
-        return vertexList; //TODO: defensive copying? 
+        List<Vertex> returnList = new LinkedList<Vertex>();
+        
+        for (Integer entry : vertexList){
+            returnList.add(new Vertex(entry.toString()));
+        }
+        return returnList; //TODO: defensive copying? 
     }
 }
