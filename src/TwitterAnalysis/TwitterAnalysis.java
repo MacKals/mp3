@@ -232,7 +232,7 @@ public class TwitterAnalysis {
          * use an external representation of the added vertices
          * A better solution would be to handle this internally, but the interface makes this impossible. 
          */
-        Set<Integer> addedVertices = new HashSet<Integer>();
+        Set<String> addedVertices = new TreeSet<String>();
         
         int j = 0;
         
@@ -240,7 +240,7 @@ public class TwitterAnalysis {
             sc = new Scanner(file);
             while (sc.hasNextLine()){
                 
-                if (j % 10000 == 0) {
+                if (j % 1000 == 0) {
                     System.out.println(j + ", "); 
                     
                 }
