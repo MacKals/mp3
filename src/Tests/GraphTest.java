@@ -54,7 +54,7 @@ public class GraphTest {
     /*
      * Tests the two data-structures against one another on data-set 
      * including edge-cases such as duplicate edges, looping and edges 
-     * going from vertex to itself. 
+     * going from vertex to itself.
      */
     
     @Test
@@ -95,16 +95,54 @@ public class GraphTest {
         
         System.out.println("common");
 
-  //      Set<List<Vertex>> DFSFromList = Algorithms.DFS(graphList);
-    //    Set<List<Vertex>> DFSFromMatrix = Algorithms.DFS(graphMatrix);
+        Set<List<Vertex>> DFSFromList = Algorithms.DFS(graphList);
+        Set<List<Vertex>> DFSFromMatrix = Algorithms.DFS(graphMatrix);
 
         
-    //    System.out.println( DFSFromList.size() );
-     //   System.out.println( DFSFromMatrix.size() );
+        System.out.println( DFSFromList.size() );
+        System.out.println( DFSFromMatrix.size() );
         
-    //    assertEquals(Algorithms.BFS(graphList).size(), Algorithms.BFS(graphMatrix).size());
-       // assertEquals(Algorithms.DFS(graphList).toString(), Algorithms.DFS(graphMatrix).toString());
+        assertEquals(Algorithms.BFS(graphList).size(), Algorithms.BFS(graphMatrix).size());
+        assertEquals(Algorithms.DFS(graphList).toString(), Algorithms.DFS(graphMatrix).toString());
 
+    }
+    
+    
+    /*
+     * Tests all the Algorythms methods against known values on a small data-set.
+     */
+    
+    //@Test
+    public void TestAlgorythmsRepresentations() { 
+        
+        File file = new File(smallFile);
+        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+
+        System.out.println("representations loaded");
+        
+        Vertex a = new Vertex("3");
+        Vertex b = new Vertex("7"); 
+        Vertex c = new Vertex("8");
+        Vertex d = new Vertex("15");       
+        
+        //test shortest distance with two different set of vertices against known values
+        int shortastDistanceAB = Algorithms.shortestDistance(graph, a, b, false);
+        int shortastDistanceDownstreamOnlyAB = Algorithms.shortestDistance(graph, a, b, true);
+
+        int shortastDistanceCD = Algorithms.shortestDistance(graph, c, d, false);
+        int shortastDistanceDownstreamOnlyCD = Algorithms.shortestDistance(graph, c, d, true);
+
+        assertEquals(shortastDistanceAB, 1);
+        assertEquals(shortastDistanceDownstreamOnlyAB, 1);
+        
+        assertEquals(shortastDistanceCD, 1);
+        assertEquals(shortastDistanceDownstreamOnlyCD, 1);
+        
+    }
+    
+    @Test 
+    public void TestAlgorythmsBFSandDFS() {
+        
     }
     
    // @Test
