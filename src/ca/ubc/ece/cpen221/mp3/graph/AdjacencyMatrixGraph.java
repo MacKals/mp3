@@ -35,17 +35,6 @@ public class AdjacencyMatrixGraph implements Graph {
         
         matrix.get(v1Index).set(v2Index, true);
         
-        for (String vertexLabel : vertices) {
-            System.out.println(vertexLabel);
-        }
-        
-        for (List<Boolean> list : matrix) {
-            for (Boolean label : list) {
-                System.out.print("  " + label);
-            }
-            System.out.println("");
-        }
-        
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
@@ -68,6 +57,7 @@ public class AdjacencyMatrixGraph implements Graph {
             }
         }
         
+        System.out.println();
         
         return down;
     }

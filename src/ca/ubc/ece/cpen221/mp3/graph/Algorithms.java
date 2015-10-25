@@ -164,7 +164,7 @@ public class Algorithms {
     }
 	 
 	interface BreadthFirstSearch {
-	    int evaluate(Vertex v, boolean upstream);   
+	    int evaluate(Vertex v);   
 	}
 	
 	/** Computes the shortest distance between two vertices in a Directed Graph.
@@ -187,67 +187,66 @@ public class Algorithms {
          *      -   check if equal 
          *      -   stage connected vertices  
          */
+  
         
-        BreadthFirstSearch Bfs = new BreadthFirstSearch() {
+        //ensure a != b
+        if (a.equals(b)) {
+            return 0;
+        }
+        
+        // using breadth first search to determine shortest distance, enabling us to terminate once connection is found.
+        List<Vertex> checkedVertices = new LinkedList<Vertex>();
+        Queue<Vertex> stagedVertices = new LinkedList<Vertex>();
+        
+        stagedVertices.add(a);
+
+        int traversedDistance = 1;
+
+        while (!stagedVertices.isEmpty()) {
+                  
+            Vertex vertexUnderEvaluation = stagedVertices.poll();
             
-            public int evaluate(Vertex v, boolean upstream) {
-                
-                //ensure a != b
-                if (a.equals(b)) {
-                    return 0;
-                }
-                
-                // using breadth first search to determine shortest distance, enabling us to terminate once connection is found.
-                List<Vertex> checkedVertices = new LinkedList<Vertex>();
-                Queue<Vertex> stagedVertices = new LinkedList<Vertex>();
-                
-                stagedVertices.add(a);
+            List<Vertex> neighbours;
+            
+            //probe in specified direction, downstream or both
+            neighbours = graph.getDownstreamNeighbors(vertexUnderEvaluation);
 
-                int traversedDistance = 1;
-
-                while (! stagedVertices.isEmpty()) {
-                          
-                    Vertex vertexUnderEvaluation = stagedVertices.poll();
-                    
-                    List<Vertex> directionalVerticesOfVertex;
-                    
-                    //probe in specified direction, upstream or downstream
-                    if (upstream) {
-                        directionalVerticesOfVertex = graph.getUpstreamNeighbors(vertexUnderEvaluation);
-                    } else {
-                        directionalVerticesOfVertex = graph.getDownstreamNeighbors(vertexUnderEvaluation);
-                    }
-                    
-                    for (Vertex vertex : directionalVerticesOfVertex) {
-                        
-                        if (!checkedVertices.contains(vertex)) {
-                            stagedVertices.add(vertex);
-                            checkedVertices.add(vertex);
-                        }
-                        
-                        if (vertex.equals(b)) {
-                            return traversedDistance;
-                        }
-                        
-                    }   
-                   
-                    traversedDistance++;
-                }
+            if (!evaluateDownstreamOnly) {
+                neighbours.addAll(graph.getUpstreamNeighbors(vertexUnderEvaluation));
+            } 
+            
+            for (Vertex vertex : neighbours) {
                 
-                return NotFound;
+                if (!checkedVertices.contains(vertex)) {
+                    
+                    if (vertex.equals(b)) {
+                        return traversedDistance;
+                    } 
+                    
+                    checkedVertices.add(vertex);
+                    stagedVertices.add(vertex);
+                }  
+            }   
+           
+            traversedDistance++;
+        }
+        
+        return NotFound;
+        
+        /*
             }
         };
         
-        if (evaluateDownstreamOnly) return Bfs.evaluate(a, false);
+        if (evaluateDownstreamOnly) return Bfs.evaluate(a);
         
-        int distanceUpstream = Bfs.evaluate(a, true);
-        int distanceDownstream = Bfs.evaluate(a, false);
+        int distanceUpstream = Bfs.evaluate(a);
+        int distanceDownstream = Bfs.evaluate(a);
         
         System.out.println("distanceUpstream " + distanceUpstream + "down" + distanceDownstream);
         
         if (distanceDownstream == NotFound && distanceUpstream == NotFound) return NotFound;
         else if (distanceUpstream == NotFound) return distanceDownstream;
         else if (distanceDownstream == NotFound) return distanceUpstream;
-        else return distanceUpstream < distanceDownstream ? distanceUpstream : distanceDownstream; 
+        else return distanceUpstream < distanceDownstream ? distanceUpstream : distanceDownstream; */
     }
 }
