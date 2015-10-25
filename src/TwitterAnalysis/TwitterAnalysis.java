@@ -37,10 +37,14 @@ public class TwitterAnalysis {
         //get input queries
         List<Query> queries = Query.getQueriesFromFile(queriesFile);
         
+        System.out.println("queries read"); 
+       
         //generate graph
         File file = new File(twitterFile);
         Graph graph = fileToGraph(file, true);
         
+        System.out.println("graph generated"); 
+
         //generate output
         String output = new String();
         
@@ -66,7 +70,10 @@ public class TwitterAnalysis {
                 }              
             }
         }
-         
+        
+        System.out.println("queries performed with result: " + output); 
+
+        
         //print file
         try {
             PrintWriter out = new PrintWriter(outputFile);
@@ -225,10 +232,19 @@ public class TwitterAnalysis {
          * A better solution would be to handle this internally, but the interface makes this impossible. 
          */
         Set<String> addedVertices = new TreeSet<String>();
-                        
+        
+        int j = 0;
+        
         try{
             sc = new Scanner(file);
             while (sc.hasNextLine()){
+                
+                if (j % 100 == 0) {
+                    System.out.println(j + ", "); 
+                    
+                }
+                
+                j++;
                 
                 String url = sc.nextLine();//.trim();
                 int i = url.indexOf(" -> ");
