@@ -19,7 +19,6 @@ public class AdjacencyListGraph implements Graph {
             adjacencyList.add(new LinkedList<String>());
             vertexList.add(v.getLabel());
         } 
-        System.out.println("List of vertices in AdjacencyList:" + vertexList);
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
@@ -41,14 +40,11 @@ public class AdjacencyListGraph implements Graph {
         
         List<Vertex> downstreamNeighboursList = new ArrayList<Vertex>();
         
-       
-        
         int index = vertexList.indexOf(v.getLabel());
                  
         for (String vertex : adjacencyList.get(index)){
             downstreamNeighboursList.add(new Vertex(vertex));    //defensive copy
         }
-        System.out.println("List of downstream neighbours to " + v +  " in AdjacencyList:" + downstreamNeighboursList);
         return downstreamNeighboursList;
     }
 
@@ -62,7 +58,7 @@ public class AdjacencyListGraph implements Graph {
                 upstreamNeighboursList.add( new Vertex(vertexList.get(i)));
             }
         }
-        System.out.println("List of upstream neighbours to " + vertex + " in AdjacencyList: " + upstreamNeighboursList);
+
         return upstreamNeighboursList;
     }
 
