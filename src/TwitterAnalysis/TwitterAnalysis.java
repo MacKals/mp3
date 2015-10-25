@@ -232,7 +232,7 @@ public class TwitterAnalysis {
          * use an external representation of the added vertices
          * A better solution would be to handle this internally, but the interface makes this impossible. 
          */
-        Set<String> addedVertices = new TreeSet<String>();
+        Set<Integer> addedVertices = new HashSet<Integer>();
         
         int j = 0;
         
@@ -259,13 +259,13 @@ public class TwitterAnalysis {
                 Vertex vertex2 = new Vertex(string2);
                 
                 //adds the vertices to the graph if they don't exist already
-                if (! addedVertices.contains(string1) ) {
+                if (! addedVertices.contains(string1.hashCode()) ) {
                     buildGraph.addVertex(vertex1);
-                    addedVertices.add(string1);
+                    addedVertices.add(string1.hashCode());
                 }
-                if (! addedVertices.contains(string2) ){
+                if (! addedVertices.contains(string2.hashCode()) ){
                     buildGraph.addVertex(vertex2);
-                    addedVertices.add(string2);
+                    addedVertices.add(string2.hashCode());
                 }
                 
                 buildGraph.addEdge(vertex1, vertex2);

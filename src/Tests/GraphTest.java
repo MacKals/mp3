@@ -32,7 +32,7 @@ public class GraphTest {
     public void TestListRepresentation() { 
         
         File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+        Graph graph = TwitterAnalysis.fileToGraph(file, false);
         
         Vertex a = new Vertex("1");
         Vertex b = new Vertex("5");
@@ -41,7 +41,7 @@ public class GraphTest {
         int retweetsBA = Algorithms.shortestDistance(graph, b, a, true);
 
         assertEquals(retweetsAB, 1);
-        assertEquals(retweetsBA, 4);
+        assertEquals(retweetsBA, 3);
 
         List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, a, b);
 
@@ -56,10 +56,11 @@ public class GraphTest {
      * including edge-cases such as duplicate edges, looping and edges 
      * going from vertex to itself. 
      */
+    
     @Test
     public void TestInternalRepresentations() { 
         
-        File file = new File(smallFile);
+        File file = new File(mediumFile);
         Graph graphList = TwitterAnalysis.fileToGraph(file, true);
         Graph graphMatrix = TwitterAnalysis.fileToGraph(file, true);
 
@@ -106,7 +107,7 @@ public class GraphTest {
 
     }
     
-    @Test
+   // @Test
     public void testMain() {
         
         String[] input= {"datasets/QueryFile1.txt", "datasets/output.txt"}; 
