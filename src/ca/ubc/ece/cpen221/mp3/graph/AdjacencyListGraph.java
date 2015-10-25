@@ -21,25 +21,9 @@ public class AdjacencyListGraph implements Graph {
     public void addEdge(Vertex v1, Vertex v2) {
         
         adjacencyList.get(vertexList.indexOf(v1)).add(v2);
-        
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
-        
-//        for (int i = 0; i < adjacencyList.size(); i++){
-//            
-//            if (adjacencyList.get(i).get(0).equals(v1)){
-//                
-//                for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-//                    
-//                    if ( adjacencyList.get(i).get(i2).equals(v2)){
-//                        return true;
-//                    }
-//                }
-//            }
-//        }
-//        
-//        return false; 
         
         if (adjacencyList.get(vertexList.indexOf(v1)).contains(v2)){
             return true;

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -231,15 +232,15 @@ public class TwitterAnalysis {
          * use an external representation of the added vertices
          * A better solution would be to handle this internally, but the interface makes this impossible. 
          */
-        Set<String> addedVertices = new TreeSet<String>();
+        Set<Integer> addedVertices = new HashSet<Integer>();
         
         int j = 0;
         
-        try{
+        try {
             sc = new Scanner(file);
             while (sc.hasNextLine()){
                 
-                if (j % 1000 == 0) {
+                if (j % 10000 == 0) {
                     System.out.println(j + ", "); 
                     
                 }
