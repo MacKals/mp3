@@ -54,19 +54,13 @@ public class AdjacencyListGraph implements Graph {
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
-        LinkedList<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
+        List<Vertex> downstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (int i = 0; i < adjacencyList.size(); i++){
-            if (adjacencyList.get(i).get(0).equals(v)){
-                
-                
-                for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-                    //defensive copy
-                    downstreamNeighboursList.add(new Vertex(adjacencyList.get(i).get(i2).toString()));
-                }
-                
-                break;
-            }
+        int index = vertexList.indexOf(v);
+                 
+        for (Vertex vertex : adjacencyList.get(index)){
+            
+            downstreamNeighboursList.add(new Vertex(vertex.toString()));    //defensive copy
         }
         
         return Collections.unmodifiableList(downstreamNeighboursList);
@@ -76,17 +70,12 @@ public class AdjacencyListGraph implements Graph {
     public List<Vertex> getUpstreamNeighbors(Vertex v) {
         LinkedList<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (int i = 0; i < adjacencyList.size(); i++){
-            
-            for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-                
-                if (adjacencyList.get(i).get(i2).equals(v)){
-                  //defensive copy
-                    upstreamNeighboursList.add(new Vertex(adjacencyList.get(i).get(0).toString()));
+        for (List<Vertex> vertices : adjacencyList) {
+            for (Vertex vertex : vertices) {
+                if (v.equals(vertex)) {
+                    upstreamNeighboursList.add(v);
                 }
-                
             }
-                
         }
         
         return upstreamNeighboursList;
@@ -94,12 +83,7 @@ public class AdjacencyListGraph implements Graph {
 
 
     public List<Vertex> getVertices() {
-        LinkedList<Vertex> verticesList = new LinkedList<Vertex>();
         
-        for (int i = 0; i < adjacencyList.size(); i++){
-          //defensive copy
-            verticesList.add(new Vertex(adjacencyList.get(i).get(0).toString())); 
-        }
-        return verticesList;
+        return vertexList; //TODO: defensive copying? 
     }
 }
