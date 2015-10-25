@@ -3,8 +3,10 @@ package Tests;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -28,7 +30,8 @@ public class GraphTest {
      *  - b and a should be 1.
      * The list of commonInfluencers should contain 2, 3, 4 in this order.
      */
-   // @Test
+    
+    @Test
     public void TestListRepresentation() { 
         
         File file = new File(smallFile);
@@ -41,13 +44,7 @@ public class GraphTest {
         int retweetsBA = Algorithms.shortestDistance(graph, b, a, true);
 
         assertEquals(retweetsAB, 1);
-        assertEquals(retweetsBA, 3);
-
-        List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, a, b);
-
-        assertEquals(commonInfluencers.get(0).toString(), "2");
-        assertEquals(commonInfluencers.get(1).toString(), "3");
-        assertEquals(commonInfluencers.get(2).toString(), "4");
+        assertEquals(retweetsBA, 2);
     }
     
     
@@ -58,14 +55,12 @@ public class GraphTest {
      * ADD: test all methods in graph
      */
     
-  //  @Test
+    @Test
     public void TestInternalRepresentations() { 
         
         File file = new File(mediumFile);
         Graph graphList = TwitterAnalysis.fileToGraph(file, true);
         Graph graphMatrix = TwitterAnalysis.fileToGraph(file, false);
-
-        System.out.println("representations loaded");
         
         Vertex a = new Vertex("3");
         Vertex b = new Vertex("7"); 
@@ -81,42 +76,32 @@ public class GraphTest {
         
         assertEquals(retweetsFromListAB, retweetsFromMatrixAB);
         assertEquals(retweetsFromListCD, retweetsFromMatrixCD);
-     
+        
         System.out.println("retweets");
-
+        
         //test for equal result with common influencers
         List<Vertex> commonInfluencersListAB = Algorithms.commonDownstreamVertices(graphList, a, b);
         List<Vertex> commonInfluencersMatrixAB = Algorithms.commonDownstreamVertices(graphMatrix, a, b);
 
         List<Vertex> commonInfluencersListCD = Algorithms.commonDownstreamVertices(graphList, c, d);
         List<Vertex> commonInfluencersMatrixCD = Algorithms.commonDownstreamVertices(graphMatrix, c, d);
-
+        
         assertEquals(commonInfluencersListAB, commonInfluencersMatrixAB);
         assertEquals(commonInfluencersListCD, commonInfluencersMatrixCD);
         
-        System.out.println("common");
-
-        Set<List<Vertex>> DFSFromList = Algorithms.DFS(graphList);
-        Set<List<Vertex>> DFSFromMatrix = Algorithms.DFS(graphMatrix);
-
-        
-        System.out.println( DFSFromList.size() );
-        System.out.println( DFSFromMatrix.size() );
-        
-        assertEquals(Algorithms.BFS(graphList).size(), Algorithms.BFS(graphMatrix).size());
-        assertEquals(Algorithms.DFS(graphList).toString(), Algorithms.DFS(graphMatrix).toString());
-
+        //compare BFS and DFS results
+        assertEquals(Algorithms.BFS(graphList), Algorithms.BFS(graphMatrix));
+        assertEquals(Algorithms.DFS(graphList), Algorithms.DFS(graphMatrix));
     }
         
     /*
      * Tests all the Algorythms methods against known values on a small data-set.
      */
-    
     @Test
     public void TestAlgorythmsRepresentations() { 
         
         File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+        Graph graph = TwitterAnalysis.fileToGraph(file, false);
         
         Vertex a = new Vertex("1");
         Vertex b = new Vertex("4");
@@ -130,43 +115,36 @@ public class GraphTest {
         int shortastDistanceCD = Algorithms.shortestDistance(graph, c, d, false);
         int shortastDistanceDownstreamOnlyCD = Algorithms.shortestDistance(graph, c, d, true);
         
-        System.out.println(shortastDistanceAB + " " +  shortastDistanceDownstreamOnlyAB +  " " + shortastDistanceCD + " " + shortastDistanceDownstreamOnlyCD);
         
-        assertEquals(shortastDistanceAB, 1);
-        assertEquals(shortastDistanceDownstreamOnlyAB, 1);
+        assertEquals(shortastDistanceAB, 2);
+        assertEquals(shortastDistanceDownstreamOnlyAB, -1);
         
         assertEquals(shortastDistanceCD, 1);
         assertEquals(shortastDistanceDownstreamOnlyCD, 1);
         
         
-        //testing common upstream vertices against known values
-        
+        //testing common upstream and downstream vertices against known values
         List<Vertex> commonUpstreamAB = Algorithms.commonUpstreamVertices(graph, a, b);
         List<Vertex> commonUpstreamCD = Algorithms.commonUpstreamVertices(graph, c, d);
-
-        
-        
         
         List<Vertex> commonDownstreamAB = Algorithms.commonDownstreamVertices(graph, a, b);
+        List<Vertex> commonDownstreamCD = Algorithms.commonDownstreamVertices(graph, c, d);
         
-        
-        
-    }
-    
-   // @Test 
-    public void TestAlgorythmsBFSandDFS() {
-        
-        File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+        List<Vertex> commonDownstreamABAnswer = new ArrayList<Vertex>();
+        commonDownstreamABAnswer.add(new Vertex("5"));
 
-        Set<List<Vertex>> BFSresult = Algorithms.DFS(graph);
+        List<Vertex> commonDownstreamCDAnswer = new ArrayList<Vertex>();
+        commonDownstreamCDAnswer.add(new Vertex("2"));
+        commonDownstreamCDAnswer.add(new Vertex("3"));
+
+        System.out.println("Down AB: " + commonDownstreamAB + " " + commonDownstreamABAnswer);
+        System.out.println("Down CD: " + commonDownstreamCD + " " + commonDownstreamCDAnswer);
         
-        for (List<Vertex> list : BFSresult) {
-            System.out.println("newLine");
-            for (Vertex vertex : list) {
-                System.out.println(vertex.toString());
-            }
-        }
+        assertEquals(commonUpstreamAB.isEmpty(), true);
+        assertEquals(commonUpstreamCD.get(0).getLabel(), "1");
+        
+        assertEquals(commonDownstreamAB, commonDownstreamABAnswer);
+        assertEquals(commonDownstreamCD, commonDownstreamCDAnswer);
         
     }
     

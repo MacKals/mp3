@@ -1,6 +1,5 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

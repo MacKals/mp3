@@ -2,8 +2,8 @@ package ca.ubc.ece.cpen221.mp3.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -45,10 +45,11 @@ public class Algorithms {
 	 */
 	private static Set<List<Vertex>> search(Graph graph, boolean BFS) {
 	    
-	    Set<List<Vertex>> returnSet = new TreeSet<List<Vertex>>();
+	    Set<List<Vertex>> returnSet = new HashSet<List<Vertex>>();
         
         for ( Vertex vertex : graph.getVertices() ) {
-            returnSet.add( listFromVertex(graph, vertex, BFS) );
+            List<Vertex> tempList = listFromVertex(graph, vertex, BFS);
+            returnSet.add(tempList);
         }
         
         return returnSet;
@@ -86,21 +87,15 @@ public class Algorithms {
 	            vertexUnderEvaluation = stagedVertices.removeFirst();  //stack behavior
 	        }
 	        
-	        if (checkedVertices.contains(vertexUnderEvaluation)) {
-	            continue;
+	        if (!checkedVertices.contains(vertexUnderEvaluation)) {
+	           
+	            checkedVertices.add(vertexUnderEvaluation);
+	            returnList.add(vertexUnderEvaluation);
+	            
+	            stagedVertices.addAll( graph.getDownstreamNeighbors(vertexUnderEvaluation) );
+	            stagedVertices.addAll( graph.getUpstreamNeighbors(vertexUnderEvaluation) );
+	            
 	        }
-	        
-	        checkedVertices.add(vertexUnderEvaluation);
-	        returnList.add(vertexUnderEvaluation);
-	        
-	        for (Vertex v : graph.getDownstreamNeighbors(vertexUnderEvaluation)) {
-	            stagedVertices.addFirst(v);
-	        }
-	        
-	        for (Vertex v : graph.getUpstreamNeighbors(vertexUnderEvaluation)) {
-	            stagedVertices.addFirst(v);
-	        }
-	        
 	    }
 	   
 	    return returnList;
@@ -155,12 +150,18 @@ public class Algorithms {
         // compare all neighbours of a to neighbours of b using the .edgeExists method of the graph
         for (Vertex neighbour : aNeighbours) {
 
-            if (graph.edgeExists(b, neighbour)) {
-                commonVertices.add(neighbour);
+            if (upstream) {
+                if (graph.edgeExists(neighbour, b)) {
+                    commonVertices.add(neighbour);
+                }
+            } else {
+                if (graph.edgeExists(b, neighbour)) {
+                    commonVertices.add(neighbour);
+                }
             }
         }
         
-        return Collections.unmodifiableList(commonVertices);
+        return commonVertices;
     }
 	 
 	interface BreadthFirstSearch {
@@ -201,9 +202,12 @@ public class Algorithms {
         stagedVertices.add(a);
 
         int traversedDistance = 1;
-
+        int verticesInCurrentLayer = 1;
+        int verticesInNextLayer = 0;
+        
+        
         while (!stagedVertices.isEmpty()) {
-                  
+
             Vertex vertexUnderEvaluation = stagedVertices.poll();
             
             List<Vertex> neighbours = new ArrayList<Vertex>();
@@ -224,11 +228,18 @@ public class Algorithms {
                     } 
                     
                     checkedVertices.add(vertex);
+                    verticesInNextLayer++;
                     stagedVertices.add(vertex);
                 }  
             }   
-           
-            traversedDistance++;
+            
+            verticesInCurrentLayer--;
+            
+            // handeling indecies
+            if (verticesInCurrentLayer == 0) {
+                verticesInCurrentLayer = verticesInNextLayer;
+                traversedDistance++;
+            }
         }
         
         return NotFound;
