@@ -206,10 +206,10 @@ public class Algorithms {
                   
             Vertex vertexUnderEvaluation = stagedVertices.poll();
             
-            List<Vertex> neighbours;
+            List<Vertex> neighbours = new ArrayList<Vertex>();
             
             //probe in specified direction, downstream or both
-            neighbours = graph.getDownstreamNeighbors(vertexUnderEvaluation);
+            neighbours.addAll(graph.getDownstreamNeighbors(vertexUnderEvaluation));
 
             if (!evaluateDownstreamOnly) {
                 neighbours.addAll(graph.getUpstreamNeighbors(vertexUnderEvaluation));
@@ -232,21 +232,5 @@ public class Algorithms {
         }
         
         return NotFound;
-        
-        /*
-            }
-        };
-        
-        if (evaluateDownstreamOnly) return Bfs.evaluate(a);
-        
-        int distanceUpstream = Bfs.evaluate(a);
-        int distanceDownstream = Bfs.evaluate(a);
-        
-        System.out.println("distanceUpstream " + distanceUpstream + "down" + distanceDownstream);
-        
-        if (distanceDownstream == NotFound && distanceUpstream == NotFound) return NotFound;
-        else if (distanceUpstream == NotFound) return distanceDownstream;
-        else if (distanceDownstream == NotFound) return distanceUpstream;
-        else return distanceUpstream < distanceDownstream ? distanceUpstream : distanceDownstream; */
     }
 }
