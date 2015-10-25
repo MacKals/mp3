@@ -28,7 +28,7 @@ public class GraphTest {
      *  - b and a should be 1.
      * The list of commonInfluencers should contain 2, 3, 4 in this order.
      */
-    @Test
+   // @Test
     public void TestListRepresentation() { 
         
         File file = new File(smallFile);
@@ -52,12 +52,13 @@ public class GraphTest {
     
     
     /*
-     * Tests the two data-structures against one another on data-set 
+     * Tests the two graph-structures against one another on data-set 
      * including edge-cases such as duplicate edges, looping and edges 
-     * going from vertex to itself.
+     * going from vertex to itself. All public methods are tested for equal result.
+     * ADD: test all methods in graph
      */
     
-    @Test
+  //  @Test
     public void TestInternalRepresentations() { 
         
         File file = new File(mediumFile);
@@ -111,18 +112,16 @@ public class GraphTest {
      * Tests all the Algorythms methods against known values on a small data-set.
      */
     
-    //@Test
+    @Test
     public void TestAlgorythmsRepresentations() { 
         
         File file = new File(smallFile);
         Graph graph = TwitterAnalysis.fileToGraph(file, true);
-
-        System.out.println("representations loaded");
         
-        Vertex a = new Vertex("3");
-        Vertex b = new Vertex("7"); 
-        Vertex c = new Vertex("8");
-        Vertex d = new Vertex("15");       
+        Vertex a = new Vertex("1");
+        Vertex b = new Vertex("4");
+        Vertex c = new Vertex("1");
+        Vertex d = new Vertex("5");
         
         //test shortest distance with two different set of vertices against known values
         int shortastDistanceAB = Algorithms.shortestDistance(graph, a, b, false);
@@ -130,17 +129,33 @@ public class GraphTest {
 
         int shortastDistanceCD = Algorithms.shortestDistance(graph, c, d, false);
         int shortastDistanceDownstreamOnlyCD = Algorithms.shortestDistance(graph, c, d, true);
-
+        
+        System.out.println(shortastDistanceAB + " " +  shortastDistanceDownstreamOnlyAB +  " " + shortastDistanceCD + " " + shortastDistanceDownstreamOnlyCD);
+        
         assertEquals(shortastDistanceAB, 1);
         assertEquals(shortastDistanceDownstreamOnlyAB, 1);
         
         assertEquals(shortastDistanceCD, 1);
         assertEquals(shortastDistanceDownstreamOnlyCD, 1);
         
+        
+        
     }
     
-    @Test 
+   // @Test 
     public void TestAlgorythmsBFSandDFS() {
+        
+        File file = new File(smallFile);
+        Graph graph = TwitterAnalysis.fileToGraph(file, true);
+
+        Set<List<Vertex>> BFSresult = Algorithms.DFS(graph);
+        
+        for (List<Vertex> list : BFSresult) {
+            System.out.println("newLine");
+            for (Vertex vertex : list) {
+                System.out.println(vertex.toString());
+            }
+        }
         
     }
     

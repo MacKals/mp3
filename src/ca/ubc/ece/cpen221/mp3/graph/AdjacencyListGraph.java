@@ -41,7 +41,6 @@ public class AdjacencyListGraph implements Graph {
         int index = vertexList.indexOf(v.getLabel());
                  
         for (String vertex : adjacencyList.get(index)){
-            
             downstreamNeighboursList.add(new Vertex(vertex));    //defensive copy
         }
         
@@ -49,15 +48,13 @@ public class AdjacencyListGraph implements Graph {
     }
 
 
-    public List<Vertex> getUpstreamNeighbors(Vertex v) {
+    public List<Vertex> getUpstreamNeighbors(Vertex vertex) {
         
-        LinkedList<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
+        List<Vertex> upstreamNeighboursList = new LinkedList<Vertex>();
         
-        for (List<String> vertices : adjacencyList) {
-            for (String vertex : vertices) {
-                if (v.getLabel() == vertex) {
-                    upstreamNeighboursList.add(new Vertex(vertexList.get(adjacencyList.indexOf(vertices))));
-                }
+        for (int i = 0; i < vertexList.size(); i++) {
+            if (adjacencyList.contains(vertex)) {
+                upstreamNeighboursList.add( new Vertex(vertexList.get(i)) );
             }
         }
         

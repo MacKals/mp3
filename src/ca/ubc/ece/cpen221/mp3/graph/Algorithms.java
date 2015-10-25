@@ -48,14 +48,12 @@ public class Algorithms {
 	    Set<List<Vertex>> returnSet = new TreeSet<List<Vertex>>();
         
         for ( Vertex vertex : graph.getVertices() ) {
-                        
             returnSet.add( listFromVertex(graph, vertex, BFS) );
-           
         }
         
         return returnSet;
-    
 	}
+	
 	/** Creates an ordered list of all the vertices connected to a vertex from a graph, 
 	 * with this order determined by either BFS or DFS methods 
 	 * @param graph The Directed Graph that contains the vertex. 
@@ -207,7 +205,7 @@ public class Algorithms {
 
                 int traversedDistance = 1;
 
-                while (stagedVertices.size() != 0) {
+                while (! stagedVertices.isEmpty()) {
                           
                     Vertex vertexUnderEvaluation = stagedVertices.poll();
                     
@@ -228,6 +226,7 @@ public class Algorithms {
                         
                         if (!checkedVertices.contains(vertex)) {
                             stagedVertices.add(vertex);
+                            checkedVertices.add(vertex);
                         }
                         
                     }   
@@ -243,6 +242,8 @@ public class Algorithms {
         
         int distanceUpstream = Bfs.evaluate(a, true);
         int distanceDownstream = Bfs.evaluate(a, false);
+        
+        System.out.println("distanceUpstream " + distanceUpstream + "down" + distanceDownstream);
         
         if (distanceDownstream == NotFound && distanceUpstream == NotFound) return NotFound;
         else if (distanceUpstream == NotFound) return distanceDownstream;
