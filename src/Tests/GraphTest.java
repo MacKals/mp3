@@ -106,9 +106,7 @@ public class GraphTest {
         assertEquals(Algorithms.DFS(graphList).toString(), Algorithms.DFS(graphMatrix).toString());
 
     }
-    
-<<<<<<< HEAD
-    
+        
     /*
      * Tests all the Algorythms methods against known values on a small data-set.
      */
@@ -146,10 +144,7 @@ public class GraphTest {
         
     }
     
-   // @Test
-=======
-    // @Test
->>>>>>> 2b4b0e1a648d519af515021c4ad4aecfd0a9456f
+    @Test
     public void testMain() {
         
         String[] input= {"datasets/QueryFile1.txt", "datasets/output.txt"}; 
