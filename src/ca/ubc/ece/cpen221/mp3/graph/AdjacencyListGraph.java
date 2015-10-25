@@ -20,13 +20,17 @@ public class AdjacencyListGraph implements Graph {
 
     public void addEdge(Vertex v1, Vertex v2) {
         
+
         adjacencyList.get(vertexList.indexOf(v1.hashCode())).add(v2.hashCode());
         
+
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         
+
         if (adjacencyList.get(vertexList.indexOf(v1.hashCode())).contains(v2.hashCode())){
+
             return true;
         }
         return false;
