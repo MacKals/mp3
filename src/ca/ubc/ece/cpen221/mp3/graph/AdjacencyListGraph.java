@@ -8,7 +8,9 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
     
-    private LinkedList<LinkedList<Vertex>> adjacencyList = new LinkedList<LinkedList<Vertex>>();
+    private List<LinkedList<Vertex>> adjacencyList = new LinkedList<LinkedList<Vertex>>();
+    private List<Vertex> vertexList = new LinkedList<Vertex>();
+    
     
     public void addVertex(Vertex v) {
         
