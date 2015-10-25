@@ -15,42 +15,51 @@ public class AdjacencyListGraph implements Graph {
     public void addVertex(Vertex v) {
         
         adjacencyList.add(new LinkedList<Vertex>());
-        adjacencyList.getLast().add(v);
+        vertexList.add(v);
     }
 
     public void addEdge(Vertex v1, Vertex v2) {
         
-        for (int i = 0; i < adjacencyList.size(); i++){
-           
-           //we found the vertex v1, and we don't have this edge already, then add it
-            if (adjacencyList.get(i).get(0).equals(v1)){ 
-                
-                adjacencyList.get(i).add(v2); //add the edge
-                break;
-            }
-        }
+//        for (int i = 0; i < adjacencyList.size(); i++){
+//           
+//           //we found the vertex v1, and we don't have this edge already, then add it
+//            if (adjacencyList.get(i).get(0).equals(v1)){ 
+//                
+//                adjacencyList.get(i).add(v2); //add the edge
+//                break;
+//            }
+//        }
+        
+        LinkedList<Vertex> v2List = new LinkedList<Vertex>();
+        v2List.add(v2);
+        
+        
+        adjacencyList.add(vertexList.indexOf(v1), v2List);
         
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
         
-        for (int i = 0; i < adjacencyList.size(); i++){
-            
-            if (adjacencyList.get(i).get(0).equals(v1)){
-                
-                for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
-                    
-                    if ( adjacencyList.get(i).get(i2).equals(v2)){
-                        return true;
-                    }
-                }
-            }
+//        for (int i = 0; i < adjacencyList.size(); i++){
+//            
+//            if (adjacencyList.get(i).get(0).equals(v1)){
+//                
+//                for (int i2 = 1; i2 < adjacencyList.get(i).size(); i2++){
+//                    
+//                    if ( adjacencyList.get(i).get(i2).equals(v2)){
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//        
+//        return false; 
+        
+        if (adjacencyList.get(vertexList.indexOf(v1)).contains(v2)){
+            return true;
         }
-        
-        return false; 
-        
+        return false;
     }
-
 
     public List<Vertex> getDownstreamNeighbors(Vertex v) {
         
