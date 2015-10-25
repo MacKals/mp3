@@ -22,8 +22,6 @@ public class AdjacencyListGraph implements Graph {
         
 
         adjacencyList.get(vertexList.indexOf(v1.hashCode())).add(v2.hashCode());
-        
-
     }
 
     public boolean edgeExists(Vertex v1, Vertex v2) {
@@ -74,6 +72,6 @@ public class AdjacencyListGraph implements Graph {
         for (Integer entry : vertexList){
             returnList.add(new Vertex(entry.toString()));
         }
-        return returnList; //TODO: defensive copying? 
+        return returnList; 
     }
 }
