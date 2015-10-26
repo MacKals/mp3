@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyListGraph;
 import ca.ubc.ece.cpen221.mp3.graph.AdjacencyMatrixGraph;
@@ -27,8 +26,8 @@ public class TwitterAnalysis {
     private static String openingToken = "<result>";
     private static String closingToken = "</result>";
     
-    private static String twitterFile = "datasets/twitter.txt";
-    
+    private static String twitterFile = "datasets/twitterSmall.txt"; ////////TODO: CHANGE!!!!!!!!!!!!!!!!
+////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!
     public static void main(String[] args){
         
         //get files from input
@@ -38,14 +37,12 @@ public class TwitterAnalysis {
         //get input queries
         List<Query> queries = Query.getQueriesFromFile(queriesFile);
         
-        System.out.println("queries read"); 
-       
+        System.out.print(queries);
+        
         //generate graph
         File file = new File(twitterFile);
         Graph graph = fileToGraph(file, true);
         
-        System.out.println("graph generated"); 
-
         //generate output
         String output = new String();
         
@@ -58,11 +55,14 @@ public class TwitterAnalysis {
                 case CommonInfluencers:
                     List<Vertex> commonInfluencers = Algorithms.commonDownstreamVertices(graph, query.getA(), query.getB());
                     output += printCommonInfluencers(commonInfluencers, query.getA(), query.getB());
+                    System.out.println("CommonInfluencers: " + output);
                     break;
                 
                 case NumRetweets: 
                     int retweets = Algorithms.shortestDistance(graph, query.getA(), query.getB(), true);
                     output += printNumRetweets(retweets, query.getA(), query.getB());
+                    System.out.println("Retweets: " + output);
+
                     break;
                 }
             } finally {
@@ -75,10 +75,11 @@ public class TwitterAnalysis {
         System.out.println("queries performed with result: " + output); 
 
         
+        
         //print file
         try {
             PrintWriter out = new PrintWriter(outputFile);
-            out.println(output);
+            out.print(output);
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -149,15 +150,15 @@ public class TwitterAnalysis {
                         queryInstnace.query = Query.QueryType.NumRetweets;
                     }
                     
-                    queryInstnace.vertexA = new Vertex(url.substring(firstSpace, secondSpace));
+                    queryInstnace.vertexA = new Vertex(url.substring(firstSpace + 1, secondSpace));
                     
                     if (questionMark == -1) {
                         queryInstnace.hasQuestionmark = false;
-                        queryInstnace.vertexA = new Vertex(url.substring(secondSpace));
+                        queryInstnace.vertexB = new Vertex(url.substring(secondSpace));
                     } else {
                         queryInstnace.hasQuestionmark = true;
                         //-1 to get to last index, -2 due to ending question-mark and space
-                        queryInstnace.vertexB = new Vertex(url.substring(secondSpace, url.length() - 3));  
+                        queryInstnace.vertexB = new Vertex(url.substring(secondSpace + 1, url.length() - 2));  
                     }
                     
                     returnList.add(queryInstnace);
@@ -171,7 +172,6 @@ public class TwitterAnalysis {
             return returnList;            
                  
         }
-        
     }
     
     
@@ -193,7 +193,6 @@ public class TwitterAnalysis {
         }
 
         returnString += closingToken + "\n";
-        
         return returnString;
     }
     
@@ -207,11 +206,12 @@ public class TwitterAnalysis {
         
         String returnString = new String();
         
-        returnString = "query: numRetweets " + v1.toString() + " " + v2.toString() + "\n"; 
-        returnString = openingToken + "\n";
-        returnString = result + "\n";
-        returnString = closingToken + "\n";
-        
+        returnString += "query: numRetweets " + v1.toString() + " " + v2.toString() + "\n"; 
+        returnString += openingToken + "\n";
+        returnString += result + "\n";
+        returnString += closingToken + "\n";
+        System.out.println("returnString: " + returnString);
+
         return returnString;
     }
     

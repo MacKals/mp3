@@ -1,1 +1,16 @@
-
+query: numRetweets 34176567  19402861
+<result>
+-1
+</result>
+query: numRetweets 31747489  15276629
+<result>
+-1
+</result>
+query: numRetweets 31747489  15276629
+<result>
+-1
+</result>
+query: numRetweets 18655567  15301803
+<result>
+-1
+</result>

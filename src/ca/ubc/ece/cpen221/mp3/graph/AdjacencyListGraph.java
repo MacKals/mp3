@@ -1,5 +1,6 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,14 +9,14 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyListGraph implements Graph {
     
-    private List<LinkedList<String>> adjacencyList = new LinkedList<LinkedList<String>>();
+    private List<HashSet<String>> adjacencyList = new LinkedList<HashSet<String>>();
     private List<String> vertexList = new LinkedList<String>();
     
     
     public void addVertex(Vertex v) {
         
         if (!vertexList.contains(v)){
-            adjacencyList.add(new LinkedList<String>());
+            adjacencyList.add(new HashSet<String>());
             vertexList.add(v.getLabel());
         } 
     }

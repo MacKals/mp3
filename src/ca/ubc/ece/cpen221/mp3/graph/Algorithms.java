@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -163,10 +162,6 @@ public class Algorithms {
         
         return commonVertices;
     }
-	 
-	interface BreadthFirstSearch {
-	    int evaluate(Vertex v);   
-	}
 	
 	/** Computes the shortest distance between two vertices in a Directed Graph.
 	 * The distance is equal to the shortest number of edges between the two vertices.
@@ -181,14 +176,11 @@ public class Algorithms {
         int NotFound = -1;
 
         /*
-         * get vertices connected to a
-         * stage vertices connected
-         * evaluate first staged vertex if not checked before
-         *  -   evaluate:
+         * stage a
+         * poll staged staged vertex and evaluate:
          *      -   check if equal 
          *      -   stage connected vertices  
          */
-  
         
         //ensure a != b
         if (a.equals(b)) {
@@ -235,7 +227,7 @@ public class Algorithms {
             
             verticesInCurrentLayer--;
             
-            // handeling indecies
+            // Handling indices
             if (verticesInCurrentLayer == 0) {
                 verticesInCurrentLayer = verticesInNextLayer;
                 traversedDistance++;
