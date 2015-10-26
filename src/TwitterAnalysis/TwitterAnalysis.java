@@ -26,7 +26,7 @@ public class TwitterAnalysis {
     private static String openingToken = "<result>";
     private static String closingToken = "</result>";
     
-    private static String twitterFile = "datasets/small.txt";
+    private static String twitterFile = "datasets/twitter.txt";
     public static void main(String[] args){
         
         //get files from input
