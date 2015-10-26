@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -17,10 +16,8 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class GraphTest {
 
-    private static String twitterFile = "datasets/twitter.txt";
     private static String smallFile = "datasets/small.txt";
     private static String mediumFile = "datasets/medium.txt";
-    private static String sequentialFile = "datasets/sequential.txt";
 
     /*
      * In general: 
@@ -46,12 +43,13 @@ public class GraphTest {
     public void TestAlgorythmsRepresentations() { 
         
         File file = new File(smallFile);
-        Graph graph = TwitterAnalysis.fileToGraph(file, false);
+        Graph graph = TwitterAnalysis.fileToGraph(file, true);
         
         Vertex a = new Vertex("1");
         Vertex b = new Vertex("4");
         Vertex c = new Vertex("5");
         Vertex d = new Vertex("2");
+        
         
         //test shortest distance
         int shortastDistanceAB = Algorithms.shortestDistance(graph, a, b, false);
@@ -65,6 +63,7 @@ public class GraphTest {
         
         assertEquals(shortastDistanceCD, 1);
         assertEquals(shortastDistanceDownstreamOnlyCD, 1);
+        
         
         //testing common upstream and downstream vertices
         List<Vertex> commonUpstreamAB = Algorithms.commonUpstreamVertices(graph, a, b);
@@ -86,11 +85,59 @@ public class GraphTest {
         assertEquals(commonDownstreamAB, commonDownstreamABAnswer);
         assertEquals(commonDownstreamCD, commonDownstreamCDAnswer);
 
-        //testing BFS and DFS
-        System.out.println("BFS:" + Algorithms.BFS(graph));
-        System.out.println("DFS:" + Algorithms.BFS(graph));
+        
+        //testing BFS
+        //instead of making new test-set of vertecies, we make test-set of ints and perform element-wise comparison
+        Set<List<Vertex>> BFSResult = Algorithms.BFS(graph);
+        int[][] BFSAnswerArray = {{2, 5, 4, 3, 1}, {5, 4, 3, 2, 1}, {4, 5, 3, 2, 1}, {3, 5, 4, 1, 2}, {1, 3, 5, 4, 2}};
+        List<List<Vertex>> BFSAnswer = convertToSet(BFSAnswerArray);
+        
+        //loops through set and removes matches, at end all should have been removed if all are found
+        for (List<Vertex> list : BFSResult) {
+            if (BFSAnswer.contains(list)) {                
+                BFSAnswer.remove(list);
+                continue;
+            }
+            assert(false); //should allways find match
+        }
+        assert(BFSAnswer.isEmpty());
+        
+        
+        //testing DFS
+        Set<List<Vertex>> DFSResult = Algorithms.DFS(graph);
+        int[][] DFSAnswerArray = {{3, 1, 5, 2, 4}, {2, 3, 1, 5, 4}, {4, 5, 2, 3, 1}, {1, 2, 3, 5, 4}, {5, 2, 3, 1, 4}};
+        List<List<Vertex>> DFSAnswer = convertToSet(DFSAnswerArray);
+        
+        //loops through set and removes matches, at end all should have been removed if all are found
+        for (List<Vertex> list : DFSResult) {
+            if (DFSAnswer.contains(list)) {                
+                DFSAnswer.remove(list);
+                continue;
+            }
+            assert(false); //should always find match
+        }
+        assert(DFSAnswer.isEmpty());
     }
     
+    List<List<Vertex>> convertToSet(int[][] array) {
+        
+        List<List<Vertex>> returnSet = new ArrayList<List<Vertex>>();
+        
+        
+        for (int i = 0; i < array.length; i++) {
+            
+            List<Vertex> list = new ArrayList<Vertex>();
+
+            for (int j = 0; j < array[0].length; j++) {
+                list.add(new Vertex( String.valueOf(array[i][j])) );
+            }
+            
+            returnSet.add(list);
+        }
+        
+        return returnSet;
+        
+    }
     
     /*
      * Tests the two graph-structures against one another on a data-set 
@@ -104,10 +151,16 @@ public class GraphTest {
         Graph graphList = TwitterAnalysis.fileToGraph(file, true);
         Graph graphMatrix = TwitterAnalysis.fileToGraph(file, false);
         
+        Vertex a = new Vertex("1");
+        Vertex b = new Vertex("3"); 
+        Vertex c = new Vertex("4");
+        Vertex d = new Vertex("5");       
+  /*
         Vertex a = new Vertex("3");
         Vertex b = new Vertex("7"); 
         Vertex c = new Vertex("8");
         Vertex d = new Vertex("15");       
+  */
         
         //test for equal result with shortest distance
         int retweetsFromListAB = Algorithms.shortestDistance(graphList, a, b, true);
@@ -134,7 +187,6 @@ public class GraphTest {
         //compare BFS and DFS results
         assertEquals(Algorithms.BFS(graphList), Algorithms.BFS(graphMatrix));
         assertEquals(Algorithms.DFS(graphList), Algorithms.DFS(graphMatrix));
-
     }
     
     

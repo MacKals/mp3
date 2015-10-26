@@ -26,8 +26,7 @@ public class TwitterAnalysis {
     private static String openingToken = "<result>";
     private static String closingToken = "</result>";
     
-    private static String twitterFile = "datasets/twitterSmall.txt"; ////////TODO: CHANGE!!!!!!!!!!!!!!!!
-////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!////////TODO: CHANGE!!!!!!!!!!!!!!!!
+    private static String twitterFile = "datasets/small.txt";
     public static void main(String[] args){
         
         //get files from input
@@ -65,15 +64,14 @@ public class TwitterAnalysis {
 
                     break;
                 }
-            } finally {
+            } catch (Exception e) {
                 if (query.hasQuestinmark()) {
                     continue;
-                }              
+                } else {
+                    e.printStackTrace();
+                }
             }
         }
-        
-        System.out.println("queries performed with result: " + output); 
-
         
         
         //print file
